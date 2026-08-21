@@ -13,6 +13,8 @@ export default function Docs() {
         <li>Item detail pages</li>
         <li>Mark items as recovered</li>
       </ul>
+      <h2 className="text-2xl font-bold mt-10 mb-3">Tech Stack</h2>
+      <p className="text-gray-300">Next.js, React, Tailwind CSS, Supabase, GitHub, Vercel.</p>
     </div>
   );
 }
