@@ -9,7 +9,7 @@ const FIELDS = [
   { key: "category", label: "Category" },
   { key: "color", label: "Color" },
   { key: "location", label: "Location" },
-  { key: "date", label: "Date" },
+  { key: "date", label: "Date/Time reported" },
 ];
 
 export default function Core() {
@@ -167,7 +167,7 @@ export default function Core() {
                     <span className="text-gray-500">Location:</span> {row.location || "Not detected"}
                   </li>
                   <li>
-                    <span className="text-gray-500">Date:</span> {row.item_date || "Not detected"}
+                    <span className="text-gray-500">Date/Time reported:</span> {row.item_date || "Not detected"}
                   </li>
                 </ul>
               </div>
