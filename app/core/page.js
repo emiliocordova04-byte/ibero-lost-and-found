@@ -107,7 +107,7 @@ export default function Core() {
                   className={
                     result[f.key] === "Not detected"
                       ? "text-gray-400 italic"
-                      : "text-gray-900 font-medium"
+                      : "text-white font-medium"
                   }
                 >
                   {result[f.key]}
@@ -153,7 +153,7 @@ export default function Core() {
                     “{row.raw_description}”
                   </p>
                 )}
-                <ul className="text-sm space-y-1">
+                <ul className="text-sm space-y-1 text-white">
                   <li>
                     <span className="text-gray-500">Item:</span> {row.item || "Not detected"}
                   </li>
