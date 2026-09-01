@@ -14,6 +14,7 @@ export default function RootLayout({ children }) {
             <a href="/" className="font-semibold text-lg">Ibero Lost & Found</a>
             <div className="flex gap-6 text-sm">
               <a href="/" className="hover:text-blue-600">Home</a>
+              <a href="/core" className="hover:text-blue-600">Core</a>
               <a href="/docs" className="hover:text-blue-600">Docs</a>
             </div>
           </div>
