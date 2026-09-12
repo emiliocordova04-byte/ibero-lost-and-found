@@ -14,6 +14,7 @@ const FIELDS = [
 
 export default function Core() {
   const [text, setText] = useState("");
+  const [rawText, setRawText] = useState("");
   const [result, setResult] = useState(null);
   const [saving, setSaving] = useState(false);
   const [saveMsg, setSaveMsg] = useState("");
@@ -40,6 +41,10 @@ export default function Core() {
   function handleExtract() {
     setSaveMsg("");
     setResult(extractItemDescription(text));
+    // Keep the original description around for Save (which still needs it),
+    // and clear the textarea so it's ready for the next report.
+    setRawText(text);
+    setText("");
   }
 
   async function handleSave() {
@@ -47,7 +52,7 @@ export default function Core() {
     setSaving(true);
     setSaveMsg("");
     const { error } = await supabase.from("core_outputs").insert({
-      raw_description: text,
+      raw_description: rawText,
       item: result.item,
       category: result.category,
       color: result.color,
