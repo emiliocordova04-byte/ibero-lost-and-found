@@ -19,6 +19,8 @@ export default function Core() {
   const [saveMsg, setSaveMsg] = useState("");
   const [recent, setRecent] = useState([]);
   const [loadingRecent, setLoadingRecent] = useState(true);
+  const [clearing, setClearing] = useState(false);
+  const [clearMsg, setClearMsg] = useState("");
 
   async function loadRecent() {
     setLoadingRecent(true);
@@ -61,6 +63,21 @@ export default function Core() {
     }
   }
 
+  async function handleClearAll() {
+    if (!window.confirm("Delete all recent extractions? This can't be undone.")) return;
+    setClearing(true);
+    setClearMsg("");
+    // No column value narrows this to "everything", which is the point —
+    // .not("id", "is", null) just gives PostgREST an explicit filter to run.
+    const { error } = await supabase.from("core_outputs").delete().not("id", "is", null);
+    setClearing(false);
+    if (error) {
+      setClearMsg("Could not clear: " + error.message);
+    } else {
+      loadRecent();
+    }
+  }
+
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
       <h1 className="text-3xl font-bold mb-4">Item Description Extractor</h1>
@@ -79,7 +96,7 @@ export default function Core() {
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows={4}
-        placeholder="Encontré una mochila negra cerca de la cafetería esta mañana"
+        placeholder="Found a black backpack near the cafeteria this morning"
         className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
       />
 
@@ -129,7 +146,17 @@ export default function Core() {
       )}
 
       <div className="mt-16">
-        <h2 className="text-xl font-semibold mb-4">Recent extractions</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold">Recent extractions</h2>
+          <button
+            onClick={handleClearAll}
+            disabled={clearing || loadingRecent || recent.length === 0}
+            className="text-sm text-red-600 hover:text-red-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {clearing ? "Clearing…" : "Clear all"}
+          </button>
+        </div>
+        {clearMsg && <p className="text-sm text-red-600 mb-3">{clearMsg}</p>}
         {loadingRecent ? (
           <p className="text-sm text-gray-500">Loading…</p>
         ) : recent.length === 0 ? (
