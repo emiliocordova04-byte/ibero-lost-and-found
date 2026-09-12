@@ -1,17 +1,4 @@
-import { supabase } from "@/lib/supabaseClient";
-
-async function getConnectionStatus() {
-  try {
-    const { error } = await supabase.from("items").select("id").limit(1);
-    return !error;
-  } catch (e) {
-    return false;
-  }
-}
-
-export default async function Home() {
-  const connected = await getConnectionStatus();
-
+export default function Home() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-20 text-center">
       <h1 className="text-4xl font-bold mb-4">Ibero Lost & Found</h1>
@@ -24,15 +11,6 @@ export default async function Home() {
       >
         Report an Item
       </button>
-      <div>
-        <span
-          className={`inline-block text-sm px-3 py-1 rounded-full ${
-            connected ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-          }`}
-        >
-          {connected ? "Supabase: Connected ✅" : "Supabase: Not connected ❌"}
-        </span>
-      </div>
 
       <div className="grid sm:grid-cols-3 gap-6 mt-16 text-left">
         <div className="border border-gray-200 rounded-xl p-5">
