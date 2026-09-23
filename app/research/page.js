@@ -53,6 +53,30 @@ export default function Research() {
     });
   }, [entries, search, regionFilter, typeFilter]);
 
+  // Numbers + positions for the risk map. Entries that land on the exact
+  // same score (several SaaS tools score 10/9, for example) get nudged apart
+  // horizontally so they don't render as one unreadable stacked dot.
+  const mapPoints = useMemo(() => {
+    const groups = {};
+    filtered.forEach((e) => {
+      const key = `${e.digital_score}-${e.campus_score}`;
+      (groups[key] = groups[key] || []).push(e);
+    });
+    const clamp = (n) => Math.max(4, Math.min(96, n));
+    return filtered.map((e, idx) => {
+      const key = `${e.digital_score}-${e.campus_score}`;
+      const group = groups[key];
+      const gi = group.indexOf(e);
+      const spread = group.length > 1 ? (gi - (group.length - 1) / 2) * 7 : 0;
+      return {
+        ...e,
+        number: idx + 1,
+        x: clamp(e.digital_score * 10 + spread),
+        y: clamp(e.campus_score * 10),
+      };
+    });
+  }, [filtered]);
+
   async function handleAdd(e) {
     e.preventDefault();
     if (!form.name.trim()) return;
@@ -306,7 +330,8 @@ export default function Research() {
         <p className="text-sm text-gray-500 mb-4">
           Digital (x-axis) vs. campus-specific (y-axis). The empty top-right
           corner — digital AND campus-specific — is the gap Ibero Lost &amp;
-          Found fills.
+          Found fills. Each numbered dot is a competitor/substitute; the list
+          below the map says which is which.
         </p>
         <div className="relative border border-gray-200 rounded-xl h-80 bg-gray-50 overflow-hidden">
           {[0, 2, 4, 6, 8, 10].map((v) => (
@@ -328,26 +353,44 @@ export default function Research() {
           <span className="absolute top-1 left-2 text-[10px] font-medium text-gray-600">Campus-specific</span>
           <span className="absolute bottom-6 left-2 text-[10px] font-medium text-gray-600">Generic</span>
 
-          {filtered.map((e) => {
-            const clamp = (n) => Math.max(3, Math.min(97, n));
-            return (
-              <div
-                key={e.id}
-                title={`${e.name} (digital ${e.digital_score}, campus ${e.campus_score})`}
-                className="absolute w-3 h-3 rounded-full bg-gray-700 -translate-x-1/2 translate-y-1/2"
-                style={{
-                  left: `${clamp(e.digital_score * 10)}%`,
-                  bottom: `${clamp(e.campus_score * 10)}%`,
-                }}
-              />
-            );
-          })}
+          {mapPoints.map((e) => (
+            <div
+              key={e.id}
+              title={`${e.number}. ${e.name} (digital ${e.digital_score}, campus ${e.campus_score})`}
+              className="absolute w-5 h-5 rounded-full bg-gray-700 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white -translate-x-1/2 translate-y-1/2"
+              style={{ left: `${e.x}%`, bottom: `${e.y}%` }}
+            >
+              {e.number}
+            </div>
+          ))}
           <div
             title="Ibero Lost & Found (this project)"
-            className="absolute w-4 h-4 rounded-full bg-blue-600 ring-2 ring-white -translate-x-1/2 translate-y-1/2"
-            style={{ left: "97%", bottom: "97%" }}
-          />
+            className="absolute w-6 h-6 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center ring-2 ring-white -translate-x-1/2 translate-y-1/2"
+            style={{ left: "94%", bottom: "94%" }}
+          >
+            ★
+          </div>
         </div>
+
+        {/* Legend for the numbered dots */}
+        {mapPoints.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-gray-600">
+            {mapPoints.map((e) => (
+              <span key={e.id} className="whitespace-nowrap">
+                <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-700 text-white text-[9px] font-bold mr-1 align-middle">
+                  {e.number}
+                </span>
+                {e.name}
+              </span>
+            ))}
+            <span className="whitespace-nowrap">
+              <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-blue-600 text-white text-[9px] font-bold mr-1 align-middle">
+                ★
+              </span>
+              Ibero Lost &amp; Found (this project)
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
