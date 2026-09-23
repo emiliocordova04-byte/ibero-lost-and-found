@@ -1,5 +1,10 @@
 import { supabase } from "@/lib/supabaseClient";
 
+// Without this, Next.js prerenders this page once at build time and the
+// research snapshot below would freeze at whatever the table looked like
+// during that build — force it to run on every request instead.
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const { data: entries } = await supabase
     .from("research_entries")
