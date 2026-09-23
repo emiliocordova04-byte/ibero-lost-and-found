@@ -1,4 +1,14 @@
-export default function Home() {
+import { supabase } from "@/lib/supabaseClient";
+
+export default async function Home() {
+  const { data: entries } = await supabase
+    .from("research_entries")
+    .select("region, digital_score");
+
+  const total = entries?.length || 0;
+  const mexico = entries?.filter((e) => e.region === "Mexico") || [];
+  const mexicoDigital = mexico.filter((e) => e.digital_score >= 7).length;
+
   return (
     <div className="max-w-5xl mx-auto px-6 py-20 text-center">
       <h1 className="text-4xl font-bold mb-4">Ibero Lost & Found</h1>
@@ -25,6 +35,27 @@ export default function Home() {
           <h3 className="font-semibold mb-1">Mark as recovered</h3>
           <p className="text-sm text-gray-500">Coming soon — close the loop when an item is returned.</p>
         </div>
+      </div>
+
+      <div className="mt-16 border border-blue-100 bg-blue-50 rounded-xl p-6 text-left max-w-2xl mx-auto">
+        <h3 className="font-semibold mb-2">📊 Research snapshot</h3>
+        {total === 0 ? (
+          <p className="text-sm text-gray-600">
+            No research logged yet —{" "}
+            <a href="/research" className="text-blue-600 hover:underline">
+              see /research
+            </a>
+            .
+          </p>
+        ) : (
+          <p className="text-sm text-gray-600">
+            {total} competitors/substitutes mapped so far · {mexico.length} from
+            Mexico · only {mexicoDigital} of the Mexican ones are mostly digital.{" "}
+            <a href="/research" className="text-blue-600 hover:underline">
+              See full research →
+            </a>
+          </p>
+        )}
       </div>
     </div>
   );

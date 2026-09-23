@@ -49,6 +49,44 @@ export default function Docs() {
         <li><code>location</code> — text</li>
         <li><code>item_date</code> — text (detected date as free text)</li>
       </ul>
+
+      <h2 className="text-2xl font-bold mt-10 mb-3">
+        Research + Benchmarking Dashboard
+      </h2>
+      <p className="text-gray-600 mb-3">
+        The <code>/research</code> page maps who else solves (or fails to
+        solve) lost-and-found: global software, Mexican university processes,
+        and informal substitutes like WhatsApp groups. Entries are added by
+        hand through an intake form — nothing here is AI-generated or scraped
+        automatically, since that would need a paid API.
+      </p>
+      <p className="text-gray-600 mb-3">
+        Each entry gets two 0–10 scores: <strong>digital_score</strong> (0 =
+        fully manual/paper process, 10 = fully digital) and{" "}
+        <strong>campus_score</strong> (0 = generic consumer tool, 10 = built
+        specifically for a campus). The risk map plots every entry on those
+        two axes so the gap — digital AND campus-specific, which is what
+        Ibero Lost &amp; Found is aiming for — is visible at a glance.
+      </p>
+      <p className="text-gray-600 mb-2">
+        Entries are stored in the <code>research_entries</code> table:
+      </p>
+      <ul className="list-disc list-inside text-gray-600 space-y-1">
+        <li><code>id</code> — int8, primary key, auto-increment</li>
+        <li><code>created_at</code> — timestamptz, default <code>now()</code></li>
+        <li><code>name</code> — text</li>
+        <li><code>region</code> — text (Global / Mexico / Generic)</li>
+        <li><code>type</code> — text (SaaS / Manual/Physical / Consumer App / Social/Informal)</li>
+        <li><code>digital_score</code> — int, 0–10</li>
+        <li><code>campus_score</code> — int, 0–10</li>
+        <li><code>notes</code> — text</li>
+        <li><code>source_url</code> — text</li>
+      </ul>
+      <p className="text-gray-600 mt-3">
+        The homepage&apos;s &quot;Research snapshot&quot; widget reads the same
+        table to show a live count and a Mexico-specific stat, so the
+        research isn&apos;t just sitting on its own page.
+      </p>
     </div>
   );
 }
