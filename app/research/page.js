@@ -229,14 +229,14 @@ export default function Research() {
       ) : (
         <div className="overflow-x-auto mb-12">
           <table className="w-full text-sm border border-gray-200 rounded-xl overflow-hidden">
-            <thead className="bg-gray-50">
+            <thead className="border-b border-gray-200">
               <tr>
-                <th className="text-left p-3">Name</th>
-                <th className="text-left p-3">Region</th>
-                <th className="text-left p-3">Type</th>
-                <th className="text-left p-3">Digital</th>
-                <th className="text-left p-3">Campus-specific</th>
-                <th className="text-left p-3">Source</th>
+                <th className="text-left p-3 font-semibold">Name</th>
+                <th className="text-left p-3 font-semibold">Region</th>
+                <th className="text-left p-3 font-semibold">Type</th>
+                <th className="text-left p-3 font-semibold">Digital</th>
+                <th className="text-left p-3 font-semibold">Campus-specific</th>
+                <th className="text-left p-3 font-semibold">Source</th>
               </tr>
             </thead>
             <tbody>
@@ -323,19 +323,25 @@ export default function Research() {
               style={{ bottom: `${v * 10}%` }}
             />
           ))}
-          <span className="absolute bottom-1 left-2 text-[10px] text-gray-400">Manual</span>
-          <span className="absolute bottom-1 right-2 text-[10px] text-gray-400">Digital</span>
-          <span className="absolute top-1 left-2 text-[10px] text-gray-400">Campus-specific</span>
-          <span className="absolute bottom-6 left-2 text-[10px] text-gray-400">Generic</span>
+          <span className="absolute bottom-1 left-2 text-[10px] font-medium text-gray-600">Manual</span>
+          <span className="absolute bottom-1 right-2 text-[10px] font-medium text-gray-600">Digital</span>
+          <span className="absolute top-1 left-2 text-[10px] font-medium text-gray-600">Campus-specific</span>
+          <span className="absolute bottom-6 left-2 text-[10px] font-medium text-gray-600">Generic</span>
 
-          {filtered.map((e) => (
-            <div
-              key={e.id}
-              title={`${e.name} (digital ${e.digital_score}, campus ${e.campus_score})`}
-              className="absolute w-3 h-3 rounded-full bg-gray-700 -translate-x-1/2 translate-y-1/2"
-              style={{ left: `${e.digital_score * 10}%`, bottom: `${e.campus_score * 10}%` }}
-            />
-          ))}
+          {filtered.map((e) => {
+            const clamp = (n) => Math.max(3, Math.min(97, n));
+            return (
+              <div
+                key={e.id}
+                title={`${e.name} (digital ${e.digital_score}, campus ${e.campus_score})`}
+                className="absolute w-3 h-3 rounded-full bg-gray-700 -translate-x-1/2 translate-y-1/2"
+                style={{
+                  left: `${clamp(e.digital_score * 10)}%`,
+                  bottom: `${clamp(e.campus_score * 10)}%`,
+                }}
+              />
+            );
+          })}
           <div
             title="Ibero Lost & Found (this project)"
             className="absolute w-4 h-4 rounded-full bg-blue-600 ring-2 ring-white -translate-x-1/2 translate-y-1/2"

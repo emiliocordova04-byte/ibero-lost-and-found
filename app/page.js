@@ -43,7 +43,7 @@ export default async function Home() {
       </div>
 
       <div className="mt-16 border border-blue-100 bg-blue-50 rounded-xl p-6 text-left max-w-2xl mx-auto">
-        <h3 className="font-semibold mb-2">📊 Research snapshot</h3>
+        <h3 className="font-semibold mb-2 text-gray-900">📊 Research snapshot</h3>
         {total === 0 ? (
           <p className="text-sm text-gray-600">
             No research logged yet —{" "}
