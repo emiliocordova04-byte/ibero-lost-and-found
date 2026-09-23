@@ -357,6 +357,8 @@ export default function Research() {
             <div
               key={e.id}
               title={`${e.number}. ${e.name} (digital ${e.digital_score}, campus ${e.campus_score})`}
+              aria-label={`${e.number}. ${e.name}: digital score ${e.digital_score} out of 10, campus-specific score ${e.campus_score} out of 10`}
+              role="img"
               className="absolute w-5 h-5 rounded-full bg-gray-700 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white -translate-x-1/2 translate-y-1/2"
               style={{ left: `${e.x}%`, bottom: `${e.y}%` }}
             >
@@ -365,6 +367,8 @@ export default function Research() {
           ))}
           <div
             title="Ibero Lost & Found (this project)"
+            aria-label="Ibero Lost and Found, this project"
+            role="img"
             className="absolute w-6 h-6 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center ring-2 ring-white -translate-x-1/2 translate-y-1/2"
             style={{ left: "94%", bottom: "94%" }}
           >
