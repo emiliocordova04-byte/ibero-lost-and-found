@@ -63,6 +63,11 @@ export default function Research() {
       (groups[key] = groups[key] || []).push(e);
     });
     const clamp = (n) => Math.max(4, Math.min(96, n));
+    // Base position is clamped BEFORE the spread is added, leaving room on
+    // both sides. Without this, ties at the extreme edges (e.g. three tools
+    // all scoring 10/9) get their spread clamped right back on top of each
+    // other, undoing the whole point of spreading them apart.
+    const clampBase = (n) => Math.max(10, Math.min(90, n));
     return filtered.map((e, idx) => {
       const key = `${e.digital_score}-${e.campus_score}`;
       const group = groups[key];
@@ -71,7 +76,7 @@ export default function Research() {
       return {
         ...e,
         number: idx + 1,
-        x: clamp(e.digital_score * 10 + spread),
+        x: clamp(clampBase(e.digital_score * 10) + spread),
         y: clamp(e.campus_score * 10),
       };
     });
