@@ -8,10 +8,10 @@ export default function Product() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-16">
       <h1 className="text-3xl font-bold mb-2">Product architecture</h1>
-      <p className="text-gray-600 mb-12">
+      <p className="text-gray-400 mb-12">
         How Ibero Lost & Found turns from a single-campus tool into something
         a university buys: who it's for, and what each tier unlocks. See{" "}
-        <a href="/pricing" className="text-blue-600 hover:underline">
+        <a href="/pricing" className="text-blue-400 hover:underline">
           /pricing
         </a>{" "}
         for the revenue simulator.
@@ -21,9 +21,9 @@ export default function Product() {
         <h2 className="text-xl font-semibold mb-4">Customer segments</h2>
         <div className="grid sm:grid-cols-2 gap-6">
           {SEGMENTS.map((s) => (
-            <div key={s.key} className="border border-gray-200 rounded-xl p-5">
+            <div key={s.key} className="border border-gray-800 rounded-xl p-5">
               <h3 className="font-semibold mb-1">{s.name}</h3>
-              <p className="text-sm text-gray-600">{s.description}</p>
+              <p className="text-sm text-gray-400">{s.description}</p>
             </div>
           ))}
         </div>
@@ -33,14 +33,14 @@ export default function Product() {
         <h2 className="text-xl font-semibold mb-4">Pricing tiers</h2>
         <div className="grid sm:grid-cols-3 gap-6">
           {TIERS.map((t) => (
-            <div key={t.key} className="border border-gray-200 rounded-xl p-5">
+            <div key={t.key} className="border border-gray-800 rounded-xl p-5">
               <h3 className="font-semibold mb-1">{t.name}</h3>
               <p className="text-xs text-gray-500 mb-2">
                 {t.maxStudents === Infinity
                   ? "15,000+ students"
                   : `Up to ${t.maxStudents.toLocaleString()} students`}
               </p>
-              <p className="text-sm text-gray-600">{t.blurb}</p>
+              <p className="text-sm text-gray-400">{t.blurb}</p>
             </div>
           ))}
         </div>
@@ -48,9 +48,9 @@ export default function Product() {
 
       <section>
         <h2 className="text-xl font-semibold mb-4">Product feature map</h2>
-        <div className="overflow-x-auto border border-gray-200 rounded-xl">
+        <div className="overflow-x-auto border border-gray-800 rounded-xl">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50">
+            <thead className="bg-gray-900">
               <tr>
                 <th className="text-left p-3 font-medium">Feature</th>
                 {TIERS.map((t) => (
@@ -62,14 +62,14 @@ export default function Product() {
             </thead>
             <tbody>
               {FEATURES.map((f, i) => (
-                <tr key={f.key} className={i % 2 ? "bg-gray-50/50" : ""}>
+                <tr key={f.key} className={i % 2 ? "bg-gray-900/50" : ""}>
                   <td className="p-3">{f.label}</td>
                   {TIERS.map((t) => (
                     <td key={t.key} className="text-center p-3">
                       {f.tiers.includes(t.key) ? (
-                        <span className="text-green-600">✓</span>
+                        <span className="text-green-400">✓</span>
                       ) : (
-                        <span className="text-gray-300">—</span>
+                        <span className="text-gray-700">—</span>
                       )}
                     </td>
                   ))}

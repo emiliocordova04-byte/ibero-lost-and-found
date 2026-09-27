@@ -86,7 +86,7 @@ export default function Core() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
       <h1 className="text-3xl font-bold mb-4">Item Description Extractor</h1>
-      <p className="text-gray-600 mb-8">
+      <p className="text-gray-400 mb-8">
         Describe a lost or found item in your own words — English or Spanish — and
         this tool will pull out the structured details (item, category, color,
         location and date). The extraction is a simple rule-based simulation, not a
@@ -102,7 +102,7 @@ export default function Core() {
         onChange={(e) => setText(e.target.value)}
         rows={4}
         placeholder="Found a black backpack near the cafeteria this morning"
-        className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+        className="w-full border border-gray-700 bg-gray-900 text-gray-100 placeholder-gray-500 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
       />
 
       <button
@@ -114,22 +114,22 @@ export default function Core() {
       </button>
 
       {result && (
-        <div className="border border-gray-200 rounded-xl p-5 mt-8">
+        <div className="border border-gray-800 rounded-xl p-5 mt-8">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-semibold">Extraction result</h2>
-            <span className="inline-block text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-700 font-medium tracking-wide">
+            <span className="inline-block text-xs px-2 py-1 rounded-full bg-amber-900/40 text-amber-300 font-medium tracking-wide">
               SIMULATED AI EXTRACTION
             </span>
           </div>
-          <dl className="divide-y divide-gray-100">
+          <dl className="divide-y divide-gray-800">
             {FIELDS.map((f) => (
               <div key={f.key} className="flex justify-between py-2 text-sm">
                 <dt className="text-gray-500">{f.label}</dt>
                 <dd
                   className={
                     result[f.key] === "Not detected"
-                      ? "text-gray-400 italic"
-                      : "text-white font-medium"
+                      ? "text-gray-500 italic"
+                      : "text-gray-100 font-medium"
                   }
                 >
                   {result[f.key]}
@@ -141,7 +141,7 @@ export default function Core() {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm disabled:opacity-60 disabled:cursor-not-allowed hover:bg-gray-700"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm disabled:opacity-60 disabled:cursor-not-allowed hover:bg-blue-700"
             >
               {saving ? "Saving…" : "Save"}
             </button>
@@ -156,12 +156,12 @@ export default function Core() {
           <button
             onClick={handleClearAll}
             disabled={clearing || loadingRecent || recent.length === 0}
-            className="text-sm text-red-600 hover:text-red-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            className="text-sm text-red-400 hover:text-red-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {clearing ? "Clearing…" : "Clear all"}
           </button>
         </div>
-        {clearMsg && <p className="text-sm text-red-600 mb-3">{clearMsg}</p>}
+        {clearMsg && <p className="text-sm text-red-400 mb-3">{clearMsg}</p>}
         {loadingRecent ? (
           <p className="text-sm text-gray-500">Loading…</p>
         ) : recent.length === 0 ? (
@@ -169,13 +169,13 @@ export default function Core() {
         ) : (
           <div className="space-y-4">
             {recent.map((row) => (
-              <div key={row.id} className="border border-gray-200 rounded-xl p-5">
+              <div key={row.id} className="border border-gray-800 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="inline-block text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-700 font-medium tracking-wide">
+                  <span className="inline-block text-xs px-2 py-1 rounded-full bg-amber-900/40 text-amber-300 font-medium tracking-wide">
                     SIMULATED AI EXTRACTION
                   </span>
                   {row.created_at && (
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-gray-500">
                       {new Date(row.created_at).toLocaleString()}
                     </span>
                   )}
@@ -185,7 +185,7 @@ export default function Core() {
                     “{row.raw_description}”
                   </p>
                 )}
-                <ul className="text-sm space-y-1 text-white">
+                <ul className="text-sm space-y-1 text-gray-100">
                   <li>
                     <span className="text-gray-500">Item:</span> {row.item || "Not detected"}
                   </li>

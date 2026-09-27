@@ -2,11 +2,11 @@ export default function Docs() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
       <h1 className="text-3xl font-bold mb-4">Docs</h1>
-      <p className="text-gray-600 mb-6">
+      <p className="text-gray-400 mb-6">
         This page will hold setup notes and product documentation as the project grows.
       </p>
       <h2 className="text-xl font-semibold mb-2">Roadmap</h2>
-      <ul className="list-disc list-inside text-gray-600 space-y-1">
+      <ul className="list-disc list-inside text-gray-400 space-y-1">
         <li>Report lost/found items with photos</li>
         <li>Browse and search items</li>
         <li>Filter by category and status</li>
@@ -19,13 +19,13 @@ export default function Docs() {
       <h2 className="text-2xl font-bold mt-10 mb-3">
         Generative Core Agent — Item Description Extractor
       </h2>
-      <p className="text-gray-600 mb-3">
+      <p className="text-gray-400 mb-3">
         The <code>/core</code> page lets a user describe a lost or found item in
         free text (English or Spanish) and pulls out structured fields: item,
         category, color, location and date. Detected results can be saved and the
         five most recent extractions are listed below the form.
       </p>
-      <p className="text-gray-600 mb-3">
+      <p className="text-gray-400 mb-3">
         <strong>The extraction is simulated.</strong> It does not call any paid AI
         API or run a real NLP model. It is a rule-based / keyword-matching
         function in plain JavaScript (<code>lib/extractItem.js</code>) using small
@@ -36,10 +36,10 @@ export default function Docs() {
         labeled with a <em>&quot;SIMULATED AI EXTRACTION&quot;</em> badge so it is
         honest that no real AI model is involved.
       </p>
-      <p className="text-gray-600 mb-2">
+      <p className="text-gray-400 mb-2">
         Saved extractions are stored in the <code>core_outputs</code> table:
       </p>
-      <ul className="list-disc list-inside text-gray-600 space-y-1">
+      <ul className="list-disc list-inside text-gray-400 space-y-1">
         <li><code>id</code> — int8, primary key, auto-increment</li>
         <li><code>created_at</code> — timestamptz, default <code>now()</code></li>
         <li><code>raw_description</code> — text (the original user input)</li>
@@ -53,14 +53,14 @@ export default function Docs() {
       <h2 className="text-2xl font-bold mt-10 mb-3">
         Research + Benchmarking Dashboard
       </h2>
-      <p className="text-gray-600 mb-3">
+      <p className="text-gray-400 mb-3">
         The <code>/research</code> page maps who else solves (or fails to
         solve) lost-and-found: global software, Mexican university processes,
         and informal substitutes like WhatsApp groups. Entries are added by
         hand through an intake form — nothing here is AI-generated or scraped
         automatically, since that would need a paid API.
       </p>
-      <p className="text-gray-600 mb-3">
+      <p className="text-gray-400 mb-3">
         Each entry gets two 0–10 scores: <strong>digital_score</strong> (0 =
         fully manual/paper process, 10 = fully digital) and{" "}
         <strong>campus_score</strong> (0 = generic consumer tool, 10 = built
@@ -68,10 +68,10 @@ export default function Docs() {
         two axes so the gap — digital AND campus-specific, which is what
         Ibero Lost &amp; Found is aiming for — is visible at a glance.
       </p>
-      <p className="text-gray-600 mb-2">
+      <p className="text-gray-400 mb-2">
         Entries are stored in the <code>research_entries</code> table:
       </p>
-      <ul className="list-disc list-inside text-gray-600 space-y-1">
+      <ul className="list-disc list-inside text-gray-400 space-y-1">
         <li><code>id</code> — int8, primary key, auto-increment</li>
         <li><code>created_at</code> — timestamptz, default <code>now()</code></li>
         <li><code>name</code> — text</li>
@@ -82,7 +82,7 @@ export default function Docs() {
         <li><code>notes</code> — text</li>
         <li><code>source_url</code> — text</li>
       </ul>
-      <p className="text-gray-600 mt-3">
+      <p className="text-gray-400 mt-3">
         The homepage&apos;s &quot;Research snapshot&quot; widget reads the same
         table to show a live count and a Mexico-specific stat, so the
         research isn&apos;t just sitting on its own page.
@@ -91,34 +91,36 @@ export default function Docs() {
       <h2 className="text-2xl font-bold mt-10 mb-3">
         Product Architecture + Pricing Simulator
       </h2>
-      <p className="text-gray-600 mb-3">
+      <p className="text-gray-400 mb-3">
         The <code>/product</code> page turns the Week 2 research into a sellable
-        shape: 2 customer segments (small/private universities vs. large/public
-        university systems), 3 pricing tiers (Starter/Campus/Enterprise, cut by
-        number of students per campus, not by feature gating alone), and a
+        shape: 4 customer segments (small/large, crossed with private/public
+        universities — size is auto-detected from students per campus, only
+        ownership is picked by hand), 3 pricing tiers (Starter/Campus/Enterprise,
+        cut by number of students per campus, not by feature gating alone), and a
         feature map showing what unlocks at each tier.
       </p>
-      <p className="text-gray-600 mb-3">
+      <p className="text-gray-400 mb-3">
         The <code>/pricing</code> page is the simulator: a revenue calculator
         (students per campus &times; number of campuses), a monthly/annual
-        billing toggle (15% annual discount), an assumptions table, and named
-        scenarios that save to Supabase and can be revisited or deleted. All
-        prices are simulated &mdash; there is no real checkout or billing.
+        billing toggle (15% annual discount), and named scenarios that save to
+        Supabase and can be revisited or deleted. All prices are simulated
+        &mdash; there is no real checkout or billing.
       </p>
-      <p className="text-gray-600 mb-2">
+      <p className="text-gray-400 mb-2">
         The pricing logic itself (<code>lib/pricing.mjs</code>) is plain,
-        tested JavaScript with no dependency on the page: tier assignment and
-        revenue math are covered by <code>lib/pricing.test.mjs</code>, run with{" "}
+        tested JavaScript with no dependency on the page: tier assignment,
+        segment auto-detection, and revenue math are covered by{" "}
+        <code>lib/pricing.test.mjs</code>, run with{" "}
         <code>node --test lib/pricing.test.mjs</code>.
       </p>
-      <p className="text-gray-600 mb-2">
+      <p className="text-gray-400 mb-2">
         Saved scenarios are stored in the <code>pricing_scenarios</code> table:
       </p>
-      <ul className="list-disc list-inside text-gray-600 space-y-1">
+      <ul className="list-disc list-inside text-gray-400 space-y-1">
         <li><code>id</code> &mdash; uuid, primary key</li>
         <li><code>created_at</code> &mdash; timestamptz, default <code>now()</code></li>
-        <li><code>scenario_name</code> &mdash; text</li>
-        <li><code>segment</code> &mdash; text (small_private / large_public)</li>
+        <li><code>scenario_name</code> &mdash; text (the university name)</li>
+        <li><code>segment</code> &mdash; text (small_private / large_private / small_public / large_public)</li>
         <li><code>tier</code> &mdash; text (starter / campus / enterprise)</li>
         <li><code>students_per_campus</code> &mdash; integer</li>
         <li><code>campuses</code> &mdash; integer, default 1</li>
@@ -126,7 +128,7 @@ export default function Docs() {
         <li><code>monthly_revenue</code> &mdash; numeric</li>
         <li><code>annual_revenue</code> &mdash; numeric</li>
       </ul>
-      <p className="text-gray-600 mt-3">
+      <p className="text-gray-400 mt-3">
         Scope cut this week: no admin dashboard for managing subscriptions
         &mdash; this is a pricing simulator, not a billing system.
       </p>

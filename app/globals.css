@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #f5f5f5;
 }
 
 @theme inline {
@@ -12,14 +12,14 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* No dark-mode variant: every page uses fixed light Tailwind colors
-   (bg-white, bg-gray-50, text-gray-900, etc.), so flipping --foreground to
-   near-white on a dark OS/browser preference made text on those light
-   cards unreadable (e.g. the pricing calculator's total went white-on-white).
-   Keeping one fixed light theme matches how the app is actually styled. */
+/* Background and text color are set by Tailwind classes on <body> in
+   layout.js (bg-black text-gray-100), not here. An earlier version of this
+   file set them again on the plain `body` selector below — since that rule
+   sits outside any Tailwind layer, it silently outranked the Tailwind
+   classes on body regardless of specificity, which is how the app ended up
+   with mismatched colors before. Keeping this rule to font-family only
+   avoids that trap. */
 
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
