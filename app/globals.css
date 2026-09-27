@@ -12,12 +12,11 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* No dark-mode variant: every page uses fixed light Tailwind colors
+   (bg-white, bg-gray-50, text-gray-900, etc.), so flipping --foreground to
+   near-white on a dark OS/browser preference made text on those light
+   cards unreadable (e.g. the pricing calculator's total went white-on-white).
+   Keeping one fixed light theme matches how the app is actually styled. */
 
 body {
   background: var(--background);
