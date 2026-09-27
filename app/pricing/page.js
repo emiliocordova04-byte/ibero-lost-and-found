@@ -237,6 +237,12 @@ export default function Pricing() {
                 </option>
               ))}
             </select>
+            <p className="text-xs text-gray-500 mb-4">
+              Segment for this scenario:{" "}
+              <strong className="text-gray-300">
+                {SEGMENTS.find((s) => s.key === segment)?.name || segment}
+              </strong>
+            </p>
 
             {/* Scenario toggle: monthly vs annual billing */}
             <label className="block text-sm font-medium mb-2">
@@ -272,6 +278,11 @@ export default function Pricing() {
                 Recommended tier: <strong className="text-gray-200">{result.tier.name}</strong> · $
                 {result.pricePerCampus} USD/mo per campus × {result.campuses}{" "}
                 campus{result.campuses > 1 ? "es" : ""}
+              </p>
+              <p className="text-sm text-gray-400 mb-1">
+                Segment: <strong className="text-gray-200">
+                  {SEGMENTS.find((s) => s.key === segment)?.name || segment}
+                </strong>
               </p>
               <p className="text-2xl font-bold text-gray-100">
                 ${result.displayedRevenue.toLocaleString(undefined, {
