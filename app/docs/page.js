@@ -93,18 +93,20 @@ export default function Docs() {
       </h2>
       <p className="text-gray-400 mb-3">
         The <code>/product</code> page turns the Week 2 research into a sellable
-        shape: 4 customer segments (small/large, crossed with private/public
-        universities — size is auto-detected from students per campus, only
-        ownership is picked by hand), 3 pricing tiers (Starter/Campus/Enterprise,
-        cut by number of students per campus, not by feature gating alone), and a
-        feature map showing what unlocks at each tier.
+        shape: 6 customer segments (small/medium/large, crossed with
+        private/public universities — size is auto-detected from students per
+        campus, only ownership is picked by hand), 3 pricing tiers
+        (Starter/Campus/Enterprise, cut by number of students per campus, not
+        by feature gating alone), and a feature map showing what unlocks at
+        each tier.
       </p>
       <p className="text-gray-400 mb-3">
         The <code>/pricing</code> page is the simulator: a revenue calculator
-        (students per campus &times; number of campuses), a monthly/annual
-        billing toggle (15% annual discount), and named scenarios that save to
-        Supabase and can be revisited or deleted. All prices are simulated
-        &mdash; there is no real checkout or billing.
+        (students per campus &times; number of campuses), an ownership toggle
+        that adds a 15% per-campus premium for private universities, a
+        monthly/annual billing toggle (25% annual discount), and named
+        scenarios that save to Supabase and can be revisited or deleted. All
+        prices are simulated &mdash; there is no real checkout or billing.
       </p>
       <p className="text-gray-400 mb-2">
         The pricing logic itself (<code>lib/pricing.mjs</code>) is plain,
@@ -120,7 +122,7 @@ export default function Docs() {
         <li><code>id</code> &mdash; uuid, primary key</li>
         <li><code>created_at</code> &mdash; timestamptz, default <code>now()</code></li>
         <li><code>scenario_name</code> &mdash; text (the university name)</li>
-        <li><code>segment</code> &mdash; text (small_private / large_private / small_public / large_public)</li>
+        <li><code>segment</code> &mdash; text (small_private / small_public / medium_private / medium_public / large_private / large_public)</li>
         <li><code>tier</code> &mdash; text (starter / campus / enterprise)</li>
         <li><code>students_per_campus</code> &mdash; integer</li>
         <li><code>campuses</code> &mdash; integer, default 1</li>

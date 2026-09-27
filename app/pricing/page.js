@@ -7,14 +7,16 @@ import {
   SEGMENTS,
   OWNERSHIPS,
   ANNUAL_DISCOUNT,
+  PRIVATE_PREMIUM,
   getTierForStudents,
   getSizeForStudents,
   getSegmentKey,
+  getPricePerCampus,
   calculateRevenue,
 } from "@/lib/pricing.mjs";
 
 const EMPTY_SCENARIO_NAME = "";
-const SIZE_LABEL = { small: "Small", large: "Large" };
+const SIZE_LABEL = { small: "Small", medium: "Medium", large: "Large" };
 const INPUT_CLASS =
   "w-full border border-gray-700 bg-gray-900 text-gray-100 placeholder-gray-500 rounded-lg px-3 py-2";
 
@@ -58,8 +60,8 @@ export default function Pricing() {
   }, []);
 
   const result = useMemo(
-    () => calculateRevenue({ studentsPerCampus, campuses, billingCycle }),
-    [studentsPerCampus, campuses, billingCycle]
+    () => calculateRevenue({ studentsPerCampus, campuses, billingCycle, ownership }),
+    [studentsPerCampus, campuses, billingCycle, ownership]
   );
 
   const recommendedTier = useMemo(
@@ -159,6 +161,13 @@ export default function Pricing() {
                   {" "}
                   USD/mo
                 </span>
+              </p>
+              <p className="text-xs text-gray-500 mb-1">
+                Public price shown ·{" "}
+                <strong className="font-bold text-gray-300">
+                  +{Math.round(PRIVATE_PREMIUM * 100)}% extra for private
+                </strong>{" "}
+                (${getPricePerCampus(t, "private")}/mo)
               </p>
               <p className="text-xs text-gray-500 mb-3">
                 {t.maxStudents === Infinity
@@ -319,6 +328,12 @@ export default function Pricing() {
                 <td className="py-2 text-gray-500">Annual discount</td>
                 <td className="py-2 text-right font-medium text-gray-100">
                   {Math.round(ANNUAL_DISCOUNT * 100)}% off the monthly rate
+                </td>
+              </tr>
+              <tr className="border-b border-gray-800">
+                <td className="py-2 text-gray-500">Private premium</td>
+                <td className="py-2 text-right font-medium text-gray-100">
+                  +{Math.round(PRIVATE_PREMIUM * 100)}% vs. public, per campus
                 </td>
               </tr>
               <tr>
