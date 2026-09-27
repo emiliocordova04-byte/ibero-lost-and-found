@@ -87,6 +87,49 @@ export default function Docs() {
         table to show a live count and a Mexico-specific stat, so the
         research isn&apos;t just sitting on its own page.
       </p>
+
+      <h2 className="text-2xl font-bold mt-10 mb-3">
+        Product Architecture + Pricing Simulator
+      </h2>
+      <p className="text-gray-600 mb-3">
+        The <code>/product</code> page turns the Week 2 research into a sellable
+        shape: 2 customer segments (small/private universities vs. large/public
+        university systems), 3 pricing tiers (Starter/Campus/Enterprise, cut by
+        number of students per campus, not by feature gating alone), and a
+        feature map showing what unlocks at each tier.
+      </p>
+      <p className="text-gray-600 mb-3">
+        The <code>/pricing</code> page is the simulator: a revenue calculator
+        (students per campus &times; number of campuses), a monthly/annual
+        billing toggle (15% annual discount), an assumptions table, and named
+        scenarios that save to Supabase and can be revisited or deleted. All
+        prices are simulated &mdash; there is no real checkout or billing.
+      </p>
+      <p className="text-gray-600 mb-2">
+        The pricing logic itself (<code>lib/pricing.mjs</code>) is plain,
+        tested JavaScript with no dependency on the page: tier assignment and
+        revenue math are covered by <code>lib/pricing.test.mjs</code>, run with{" "}
+        <code>node --test lib/pricing.test.mjs</code>.
+      </p>
+      <p className="text-gray-600 mb-2">
+        Saved scenarios are stored in the <code>pricing_scenarios</code> table:
+      </p>
+      <ul className="list-disc list-inside text-gray-600 space-y-1">
+        <li><code>id</code> &mdash; uuid, primary key</li>
+        <li><code>created_at</code> &mdash; timestamptz, default <code>now()</code></li>
+        <li><code>scenario_name</code> &mdash; text</li>
+        <li><code>segment</code> &mdash; text (small_private / large_public)</li>
+        <li><code>tier</code> &mdash; text (starter / campus / enterprise)</li>
+        <li><code>students_per_campus</code> &mdash; integer</li>
+        <li><code>campuses</code> &mdash; integer, default 1</li>
+        <li><code>billing_cycle</code> &mdash; text (monthly / annual)</li>
+        <li><code>monthly_revenue</code> &mdash; numeric</li>
+        <li><code>annual_revenue</code> &mdash; numeric</li>
+      </ul>
+      <p className="text-gray-600 mt-3">
+        Scope cut this week: no admin dashboard for managing subscriptions
+        &mdash; this is a pricing simulator, not a billing system.
+      </p>
     </div>
   );
 }
