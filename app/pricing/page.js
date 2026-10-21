@@ -121,7 +121,7 @@ export default function Pricing() {
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-16">
-      <h1 className="text-3xl font-bold mb-2">Pricing simulator</h1>
+      <h1 className="text-4xl font-extrabold sm:text-5xl mb-2">Pricing simulator</h1>
       <p className="text-muted mb-2">
         Simulated pricing for selling Ibero Lost & Found to a university —
         not a real checkout. See{" "}

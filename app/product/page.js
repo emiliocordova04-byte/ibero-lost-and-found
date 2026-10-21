@@ -7,7 +7,7 @@ export const metadata = {
 export default function Product() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-16">
-      <h1 className="text-3xl font-bold mb-2">Product architecture</h1>
+      <h1 className="text-4xl font-extrabold sm:text-5xl mb-2">Product architecture</h1>
       <p className="text-muted mb-12">
         How Ibero Lost & Found turns from a single-campus tool into something
         a university buys: who it's for, and what each tier unlocks. See{" "}
@@ -18,7 +18,7 @@ export default function Product() {
       </p>
 
       <section className="mb-14">
-        <h2 className="text-xl font-semibold mb-4">Customer segments</h2>
+        <h2 className="text-2xl font-bold mb-4">Customer segments</h2>
         <div className="grid sm:grid-cols-2 gap-6">
           {SEGMENTS.map((s) => (
             <div key={s.key} className="border border-line rounded-xl p-5">
@@ -30,7 +30,7 @@ export default function Product() {
       </section>
 
       <section className="mb-14">
-        <h2 className="text-xl font-semibold mb-4">Pricing tiers</h2>
+        <h2 className="text-2xl font-bold mb-4">Pricing tiers</h2>
         <div className="grid sm:grid-cols-3 gap-6">
           {TIERS.map((t) => (
             <div key={t.key} className="border border-line rounded-xl p-5">
@@ -47,7 +47,7 @@ export default function Product() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold mb-4">Product feature map</h2>
+        <h2 className="text-2xl font-bold mb-4">Product feature map</h2>
         <div className="overflow-x-auto border border-line rounded-xl">
           <table className="w-full text-sm">
             <thead className="bg-surface">

@@ -111,7 +111,7 @@ export default function Research() {
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-16">
-      <h1 className="text-3xl font-bold mb-4">Research + Benchmarking</h1>
+      <h1 className="text-4xl font-extrabold sm:text-5xl mb-4">Research + Benchmarking</h1>
       <p className="text-muted mb-10 max-w-3xl">
         Before building more of Ibero Lost &amp; Found, this page maps who else is
         solving (or not solving) the lost-and-found problem — global software,

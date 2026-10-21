@@ -85,7 +85,7 @@ export default function Core() {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
-      <h1 className="text-3xl font-bold mb-4">Item Description Extractor</h1>
+      <h1 className="text-4xl font-extrabold sm:text-5xl mb-4">Item Description Extractor</h1>
       <p className="text-muted mb-8">
         Describe a lost or found item in your own words — English or Spanish — and
         this tool will pull out the structured details (item, category, color,

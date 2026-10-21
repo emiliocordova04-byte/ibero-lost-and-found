@@ -1,7 +1,7 @@
 export default function Docs() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
-      <h1 className="text-3xl font-bold mb-4">Docs</h1>
+      <h1 className="text-4xl font-extrabold sm:text-5xl mb-4">Docs</h1>
       <p className="text-muted mb-6">
         This page will hold setup notes and product documentation as the project grows.
       </p>
@@ -134,6 +134,45 @@ export default function Docs() {
         Scope cut this week: no admin dashboard for managing subscriptions
         &mdash; this is a pricing simulator, not a billing system.
       </p>
+      <h2 className="text-2xl font-bold mt-10 mb-3">
+        Marketing Engine + Content System
+      </h2>
+      <p className="text-muted mb-3">
+        The homepage is now a landing page for the person who would buy this: a
+        university administrator. The <code>/marketing</code> page is the
+        engine behind it: a brand system, one target persona, the landing page
+        copy, 10 social posts, 3 video scripts and a 14-day campaign calendar.
+        All content is hand-written in <code>lib/marketingContent.mjs</code> and
+        is the single source for both pages, so the copy visitors see and the
+        copy documented in the engine cannot drift apart. Nothing is generated
+        by AI at runtime and no customer claims are made.
+      </p>
+      <p className="text-muted mb-3">
+        Two A/B tests run live on the homepage: the hero headline and the label
+        of the primary button. Each visitor gets an anonymous id in
+        localStorage; their variant for each test is a hash of that id and the
+        test key (<code>lib/ab.mjs</code>), so it is stable and the two tests
+        are independent. One impression and one click are recorded per visitor
+        per test. <code>/marketing</code> reads the counts and runs a
+        two-proportion z-test (<code>lib/abstats.mjs</code>), and says &quot;not
+        enough data&quot; until each variant has at least 30 visitors. Add{" "}
+        <code>?ab_hero_headline=B</code> or <code>?ab_cta_label=B</code> to
+        preview a variant without being counted.
+      </p>
+      <p className="text-muted mb-2">
+        Two tables back it (<code>supabase_marketing.sql</code>):
+      </p>
+      <ul className="list-disc list-inside text-muted space-y-1">
+        <li><code>marketing_assets</code> &mdash; id, created_at, asset_type (post / script / headline / copy), title, channel, day_number, body</li>
+        <li><code>ab_events</code> &mdash; id, created_at, test_key, variant (A / B), event (impression / click), visitor_id; unique on (test_key, visitor_id, event)</li>
+      </ul>
+      <p className="text-muted mt-3">
+        Tests: <code>npm test</code> runs 21 tests (10 from Week 3, 11 new
+        covering A/B assignment, the z-test, content integrity, exporters and
+        the headline checker). Scope cut this week: no real AI generation, no
+        auto-posting to social networks, no login, no paid analytics.
+      </p>
+
     </div>
   );
 }
