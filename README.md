@@ -6,7 +6,7 @@ A lost & found web app for Universidad Iberoamericana. Students will be able to 
 
 ## Status
 
-This is a Week 0 infrastructure build. Core features (report, browse, search, mark recovered) are scoped for upcoming weeks — see `/docs` for the roadmap.
+Working prototype built across a university course. Live today: a landing page with an interactive item demo (`/`), a rule-based item description extractor (`/core`), a market research dashboard (`/research`), the product and pricing model (`/product`, `/pricing`) and the Week 4 marketing engine with two live A/B tests (`/marketing`). The student report/browse app and the administrator dashboard are planned. See `/docs` for details and `docs/WEEK4_PLAN.md` for the Week 4 plan.
 
 ## Tech Stack
 
@@ -27,6 +27,14 @@ npm install
 npm run dev
 
 5. Open [http://localhost:3000](http://localhost:3000).
+
+## Tests
+
+`npm test` runs 21 tests with Node's built-in runner (pricing logic, A/B assignment and statistics, content integrity, exporters, headline checker).
+
+## Database setup
+
+Run the SQL files in the Supabase SQL editor: `supabase_pricing_scenarios.sql` (Week 3) and `supabase_marketing.sql` (Week 4: `marketing_assets` and `ab_events`).
 
 ## Environment Variables
 
