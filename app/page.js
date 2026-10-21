@@ -132,7 +132,7 @@ export default async function Home() {
               </>
             ) : (
               <div className="card col-span-2 p-6 text-sm text-muted">
-                Research numbers are loading from the database.
+                Live research numbers appear here when the database is reachable. Open the dashboard to see every entry.
               </div>
             )}
             <a href="/research" className="btn-ghost col-span-2">

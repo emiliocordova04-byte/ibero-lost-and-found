@@ -33,7 +33,7 @@ export default function HeroCopy() {
     logAbEvent(CTA.key, state.cta, "click");
   }
 
-  const fade = `transition-opacity duration-300 ${state.ready ? "opacity-100" : "opacity-0"}`;
+  const fade = state.ready ? "ab-ready" : "ab-pending";
 
   return (
     <div>

@@ -111,6 +111,13 @@ h1, h2, h3, .font-display {
   .rise, .ticker-track, .pulse-dot { animation: none; }
 }
 
+/* A/B hero copy is hidden until the visitor's variant is known (avoids a
+   visible A -> B swap). If JavaScript is slow or blocked, reveal it anyway
+   after 1.5s so the page is never left without a headline or button. */
+@keyframes ab-reveal { to { opacity: 1; } }
+.ab-pending { opacity: 0; animation: ab-reveal 0.01s 1.5s forwards; }
+.ab-ready { opacity: 1; transition: opacity 0.3s; }
+
 /* Subtle paper grain + grid used on hero/sections */
 .bg-grid {
   background-image:
