@@ -17,7 +17,7 @@ const EMPTY_FORM = {
 };
 
 const INPUT_CLASS =
-  "w-full border border-gray-700 bg-gray-900 text-gray-100 placeholder-gray-500 rounded-lg p-2 text-sm";
+  "w-full border border-line-strong bg-surface text-ink placeholder-muted-2 rounded-lg p-2 text-sm";
 
 export default function Research() {
   const [entries, setEntries] = useState([]);
@@ -112,7 +112,7 @@ export default function Research() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-16">
       <h1 className="text-3xl font-bold mb-4">Research + Benchmarking</h1>
-      <p className="text-gray-400 mb-10 max-w-3xl">
+      <p className="text-muted mb-10 max-w-3xl">
         Before building more of Ibero Lost &amp; Found, this page maps who else is
         solving (or not solving) the lost-and-found problem — global software,
         Mexican universities, and informal substitutes like WhatsApp groups —
@@ -120,11 +120,11 @@ export default function Research() {
       </p>
 
       {/* Intake form */}
-      <div className="border border-gray-800 rounded-xl p-5 mb-10">
+      <div className="border border-line rounded-xl p-5 mb-10">
         <h2 className="font-semibold mb-4">Add a competitor / substitute</h2>
         <form onSubmit={handleAdd} className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm text-gray-500 mb-1">Name</label>
+            <label className="block text-sm text-muted-2 mb-1">Name</label>
             <input
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -134,7 +134,7 @@ export default function Research() {
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-500 mb-1">Source URL</label>
+            <label className="block text-sm text-muted-2 mb-1">Source URL</label>
             <input
               value={form.source_url}
               onChange={(e) => setForm({ ...form, source_url: e.target.value })}
@@ -143,7 +143,7 @@ export default function Research() {
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-500 mb-1">Region</label>
+            <label className="block text-sm text-muted-2 mb-1">Region</label>
             <select
               value={form.region}
               onChange={(e) => setForm({ ...form, region: e.target.value })}
@@ -157,7 +157,7 @@ export default function Research() {
             </select>
           </div>
           <div>
-            <label className="block text-sm text-gray-500 mb-1">Type</label>
+            <label className="block text-sm text-muted-2 mb-1">Type</label>
             <select
               value={form.type}
               onChange={(e) => setForm({ ...form, type: e.target.value })}
@@ -171,7 +171,7 @@ export default function Research() {
             </select>
           </div>
           <div>
-            <label className="block text-sm text-gray-500 mb-1">
+            <label className="block text-sm text-muted-2 mb-1">
               Digital score (0 manual – 10 fully digital)
             </label>
             <input
@@ -184,7 +184,7 @@ export default function Research() {
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-500 mb-1">
+            <label className="block text-sm text-muted-2 mb-1">
               Campus-specific score (0 generic – 10 campus-only)
             </label>
             <input
@@ -197,7 +197,7 @@ export default function Research() {
             />
           </div>
           <div className="sm:col-span-2">
-            <label className="block text-sm text-gray-500 mb-1">Notes</label>
+            <label className="block text-sm text-muted-2 mb-1">Notes</label>
             <textarea
               value={form.notes}
               onChange={(e) => setForm({ ...form, notes: e.target.value })}
@@ -210,11 +210,11 @@ export default function Research() {
             <button
               type="submit"
               disabled={saving}
-              className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm disabled:opacity-60 disabled:cursor-not-allowed hover:bg-blue-700"
+              className="bg-brand text-white px-5 py-2 rounded-lg text-sm disabled:opacity-60 disabled:cursor-not-allowed hover:bg-brand-dark"
             >
               {saving ? "Saving…" : "Add entry"}
             </button>
-            {saveMsg && <span className="text-sm text-gray-500">{saveMsg}</span>}
+            {saveMsg && <span className="text-sm text-muted-2">{saveMsg}</span>}
           </div>
         </form>
       </div>
@@ -253,15 +253,15 @@ export default function Research() {
 
       {/* Table */}
       {loading ? (
-        <p className="text-sm text-gray-500">Loading…</p>
+        <p className="text-sm text-muted-2">Loading…</p>
       ) : filtered.length === 0 ? (
-        <p className="text-sm text-gray-500 mb-10">
+        <p className="text-sm text-muted-2 mb-10">
           No entries match. Try clearing the filters.
         </p>
       ) : (
         <div className="overflow-x-auto mb-12">
-          <table className="w-full text-sm border border-gray-800 rounded-xl overflow-hidden">
-            <thead className="border-b border-gray-800 bg-gray-900">
+          <table className="w-full text-sm border border-line rounded-xl overflow-hidden">
+            <thead className="border-b border-line bg-surface">
               <tr>
                 <th className="text-left p-3 font-semibold">Name</th>
                 <th className="text-left p-3 font-semibold">Region</th>
@@ -273,7 +273,7 @@ export default function Research() {
             </thead>
             <tbody>
               {filtered.map((e) => (
-                <tr key={e.id} className="border-t border-gray-800">
+                <tr key={e.id} className="border-t border-line">
                   <td className="p-3 font-medium">{e.name}</td>
                   <td className="p-3">{e.region}</td>
                   <td className="p-3">{e.type}</td>
@@ -285,12 +285,12 @@ export default function Research() {
                         href={e.source_url}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-blue-400 hover:underline"
+                        className="text-brand hover:underline"
                       >
                         Link
                       </a>
                     ) : (
-                      <span className="text-gray-500">—</span>
+                      <span className="text-muted-2">—</span>
                     )}
                   </td>
                 </tr>
@@ -306,26 +306,26 @@ export default function Research() {
           <h2 className="text-xl font-semibold mb-4">Benchmark cards</h2>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
             {filtered.map((e) => (
-              <div key={e.id} className="border border-gray-800 rounded-xl p-4">
+              <div key={e.id} className="border border-line rounded-xl p-4">
                 <div className="font-semibold mb-1">{e.name}</div>
-                <div className="text-xs text-gray-500 mb-3">
+                <div className="text-xs text-muted-2 mb-3">
                   {e.region} · {e.type}
                 </div>
-                <div className="text-xs text-gray-500 mb-1">Digital</div>
-                <div className="h-2 bg-gray-800 rounded-full mb-2">
+                <div className="text-xs text-muted-2 mb-1">Digital</div>
+                <div className="h-2 bg-paper-2 rounded-full mb-2">
                   <div
-                    className="h-2 bg-blue-500 rounded-full"
+                    className="h-2 bg-brand rounded-full"
                     style={{ width: `${e.digital_score * 10}%` }}
                   />
                 </div>
-                <div className="text-xs text-gray-500 mb-1">Campus-specific</div>
-                <div className="h-2 bg-gray-800 rounded-full mb-3">
+                <div className="text-xs text-muted-2 mb-1">Campus-specific</div>
+                <div className="h-2 bg-paper-2 rounded-full mb-3">
                   <div
-                    className="h-2 bg-purple-500 rounded-full"
+                    className="h-2 bg-navy rounded-full"
                     style={{ width: `${e.campus_score * 10}%` }}
                   />
                 </div>
-                {e.notes && <p className="text-xs text-gray-500">{e.notes}</p>}
+                {e.notes && <p className="text-xs text-muted-2">{e.notes}</p>}
               </div>
             ))}
           </div>
@@ -335,31 +335,31 @@ export default function Research() {
       {/* Risk map */}
       <div>
         <h2 className="text-xl font-semibold mb-2">Risk map</h2>
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm text-muted-2 mb-4">
           Digital (x-axis) vs. campus-specific (y-axis). The empty top-right
           corner — digital AND campus-specific — is the gap Ibero Lost &amp;
           Found fills. Each numbered dot is a competitor/substitute; the list
           below the map says which is which.
         </p>
-        <div className="relative border border-gray-800 rounded-xl h-80 bg-gray-900 overflow-hidden">
+        <div className="relative border border-line rounded-xl h-80 bg-surface overflow-hidden">
           {[0, 2, 4, 6, 8, 10].map((v) => (
             <div
               key={"v" + v}
-              className="absolute top-0 bottom-0 border-l border-gray-800"
+              className="absolute top-0 bottom-0 border-l border-line"
               style={{ left: `${v * 10}%` }}
             />
           ))}
           {[0, 2, 4, 6, 8, 10].map((v) => (
             <div
               key={"h" + v}
-              className="absolute left-0 right-0 border-t border-gray-800"
+              className="absolute left-0 right-0 border-t border-line"
               style={{ bottom: `${v * 10}%` }}
             />
           ))}
-          <span className="absolute bottom-1 left-2 text-[10px] font-medium text-gray-400">Manual</span>
-          <span className="absolute bottom-1 right-2 text-[10px] font-medium text-gray-400">Digital</span>
-          <span className="absolute top-1 left-2 text-[10px] font-medium text-gray-400">Campus-specific</span>
-          <span className="absolute bottom-6 left-2 text-[10px] font-medium text-gray-400">Generic</span>
+          <span className="absolute bottom-1 left-2 text-[10px] font-medium text-muted">Manual</span>
+          <span className="absolute bottom-1 right-2 text-[10px] font-medium text-muted">Digital</span>
+          <span className="absolute top-1 left-2 text-[10px] font-medium text-muted">Campus-specific</span>
+          <span className="absolute bottom-6 left-2 text-[10px] font-medium text-muted">Generic</span>
 
           {mapPoints.map((e) => (
             <div
@@ -367,7 +367,7 @@ export default function Research() {
               title={`${e.number}. ${e.name} (digital ${e.digital_score}, campus ${e.campus_score})`}
               aria-label={`${e.number}. ${e.name}: digital score ${e.digital_score} out of 10, campus-specific score ${e.campus_score} out of 10`}
               role="img"
-              className="absolute w-5 h-5 rounded-full bg-gray-300 text-black text-[10px] font-bold flex items-center justify-center ring-2 ring-black -translate-x-1/2 translate-y-1/2"
+              className="absolute w-5 h-5 rounded-full bg-navy text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-paper -translate-x-1/2 translate-y-1/2"
               style={{ left: `${e.x}%`, bottom: `${e.y}%` }}
             >
               {e.number}
@@ -377,7 +377,7 @@ export default function Research() {
             title="Ibero Lost & Found (this project)"
             aria-label="Ibero Lost and Found, this project"
             role="img"
-            className="absolute w-6 h-6 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center ring-2 ring-black -translate-x-1/2 translate-y-1/2"
+            className="absolute w-6 h-6 rounded-full bg-brand text-white text-[11px] font-bold flex items-center justify-center ring-2 ring-paper -translate-x-1/2 translate-y-1/2"
             style={{ left: "94%", bottom: "94%" }}
           >
             ★
@@ -386,17 +386,17 @@ export default function Research() {
 
         {/* Legend for the numbered dots */}
         {mapPoints.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-gray-400">
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted">
             {mapPoints.map((e) => (
               <span key={e.id} className="whitespace-nowrap">
-                <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-300 text-black text-[9px] font-bold mr-1 align-middle">
+                <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-navy text-white text-[9px] font-bold mr-1 align-middle">
                   {e.number}
                 </span>
                 {e.name}
               </span>
             ))}
             <span className="whitespace-nowrap">
-              <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-blue-600 text-white text-[9px] font-bold mr-1 align-middle">
+              <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-brand text-white text-[9px] font-bold mr-1 align-middle">
                 ★
               </span>
               Ibero Lost &amp; Found (this project)

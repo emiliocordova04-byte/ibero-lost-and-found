@@ -86,7 +86,7 @@ export default function Core() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
       <h1 className="text-3xl font-bold mb-4">Item Description Extractor</h1>
-      <p className="text-gray-400 mb-8">
+      <p className="text-muted mb-8">
         Describe a lost or found item in your own words — English or Spanish — and
         this tool will pull out the structured details (item, category, color,
         location and date). The extraction is a simple rule-based simulation, not a
@@ -102,34 +102,34 @@ export default function Core() {
         onChange={(e) => setText(e.target.value)}
         rows={4}
         placeholder="Found a black backpack near the cafeteria this morning"
-        className="w-full border border-gray-700 bg-gray-900 text-gray-100 placeholder-gray-500 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+        className="w-full border border-line-strong bg-surface text-ink placeholder-muted-2 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand mb-4"
       />
 
       <button
         onClick={handleExtract}
         disabled={!text.trim()}
-        className="bg-blue-600 text-white px-6 py-3 rounded-lg disabled:opacity-60 disabled:cursor-not-allowed hover:bg-blue-700"
+        className="bg-brand text-white px-6 py-3 rounded-lg disabled:opacity-60 disabled:cursor-not-allowed hover:bg-brand-dark"
       >
         Extract
       </button>
 
       {result && (
-        <div className="border border-gray-800 rounded-xl p-5 mt-8">
+        <div className="border border-line rounded-xl p-5 mt-8">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-semibold">Extraction result</h2>
-            <span className="inline-block text-xs px-2 py-1 rounded-full bg-amber-900/40 text-amber-300 font-medium tracking-wide">
+            <span className="inline-block text-xs px-2 py-1 rounded-full bg-sun/50 text-amber-900 font-medium tracking-wide">
               SIMULATED AI EXTRACTION
             </span>
           </div>
-          <dl className="divide-y divide-gray-800">
+          <dl className="divide-y divide-line">
             {FIELDS.map((f) => (
               <div key={f.key} className="flex justify-between py-2 text-sm">
-                <dt className="text-gray-500">{f.label}</dt>
+                <dt className="text-muted-2">{f.label}</dt>
                 <dd
                   className={
                     result[f.key] === "Not detected"
-                      ? "text-gray-500 italic"
-                      : "text-gray-100 font-medium"
+                      ? "text-muted-2 italic"
+                      : "text-ink font-medium"
                   }
                 >
                   {result[f.key]}
@@ -141,11 +141,11 @@ export default function Core() {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm disabled:opacity-60 disabled:cursor-not-allowed hover:bg-blue-700"
+              className="bg-brand text-white px-4 py-2 rounded-lg text-sm disabled:opacity-60 disabled:cursor-not-allowed hover:bg-brand-dark"
             >
               {saving ? "Saving…" : "Save"}
             </button>
-            {saveMsg && <span className="text-sm text-gray-500">{saveMsg}</span>}
+            {saveMsg && <span className="text-sm text-muted-2">{saveMsg}</span>}
           </div>
         </div>
       )}
@@ -156,50 +156,50 @@ export default function Core() {
           <button
             onClick={handleClearAll}
             disabled={clearing || loadingRecent || recent.length === 0}
-            className="text-sm text-red-400 hover:text-red-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            className="text-sm text-danger hover:text-danger font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {clearing ? "Clearing…" : "Clear all"}
           </button>
         </div>
-        {clearMsg && <p className="text-sm text-red-400 mb-3">{clearMsg}</p>}
+        {clearMsg && <p className="text-sm text-danger mb-3">{clearMsg}</p>}
         {loadingRecent ? (
-          <p className="text-sm text-gray-500">Loading…</p>
+          <p className="text-sm text-muted-2">Loading…</p>
         ) : recent.length === 0 ? (
-          <p className="text-sm text-gray-500">No extractions saved yet.</p>
+          <p className="text-sm text-muted-2">No extractions saved yet.</p>
         ) : (
           <div className="space-y-4">
             {recent.map((row) => (
-              <div key={row.id} className="border border-gray-800 rounded-xl p-5">
+              <div key={row.id} className="border border-line rounded-xl p-5">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="inline-block text-xs px-2 py-1 rounded-full bg-amber-900/40 text-amber-300 font-medium tracking-wide">
+                  <span className="inline-block text-xs px-2 py-1 rounded-full bg-sun/50 text-amber-900 font-medium tracking-wide">
                     SIMULATED AI EXTRACTION
                   </span>
                   {row.created_at && (
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-muted-2">
                       {new Date(row.created_at).toLocaleString()}
                     </span>
                   )}
                 </div>
                 {row.raw_description && (
-                  <p className="text-sm text-gray-500 italic mb-3">
+                  <p className="text-sm text-muted-2 italic mb-3">
                     “{row.raw_description}”
                   </p>
                 )}
-                <ul className="text-sm space-y-1 text-gray-100">
+                <ul className="text-sm space-y-1 text-ink">
                   <li>
-                    <span className="text-gray-500">Item:</span> {row.item || "Not detected"}
+                    <span className="text-muted-2">Item:</span> {row.item || "Not detected"}
                   </li>
                   <li>
-                    <span className="text-gray-500">Category:</span> {row.category || "Not detected"}
+                    <span className="text-muted-2">Category:</span> {row.category || "Not detected"}
                   </li>
                   <li>
-                    <span className="text-gray-500">Color:</span> {row.color || "Not detected"}
+                    <span className="text-muted-2">Color:</span> {row.color || "Not detected"}
                   </li>
                   <li>
-                    <span className="text-gray-500">Location:</span> {row.location || "Not detected"}
+                    <span className="text-muted-2">Location:</span> {row.location || "Not detected"}
                   </li>
                   <li>
-                    <span className="text-gray-500">Date/Time reported:</span> {row.item_date || "Not detected"}
+                    <span className="text-muted-2">Date/Time reported:</span> {row.item_date || "Not detected"}
                   </li>
                 </ul>
               </div>

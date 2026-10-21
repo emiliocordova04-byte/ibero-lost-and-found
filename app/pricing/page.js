@@ -18,7 +18,7 @@ import {
 const EMPTY_SCENARIO_NAME = "";
 const SIZE_LABEL = { small: "Small", medium: "Medium", large: "Large" };
 const INPUT_CLASS =
-  "w-full border border-gray-700 bg-gray-900 text-gray-100 placeholder-gray-500 rounded-lg px-3 py-2";
+  "w-full border border-line-strong bg-surface text-ink placeholder-muted-2 rounded-lg px-3 py-2";
 
 // A representative students-per-campus number for each tier, used when a
 // tier card is clicked so the calculator below fills in with something
@@ -122,15 +122,15 @@ export default function Pricing() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-16">
       <h1 className="text-3xl font-bold mb-2">Pricing simulator</h1>
-      <p className="text-gray-400 mb-2">
+      <p className="text-muted mb-2">
         Simulated pricing for selling Ibero Lost & Found to a university —
         not a real checkout. See{" "}
-        <a href="/product" className="text-blue-400 hover:underline">
+        <a href="/product" className="text-brand hover:underline">
           /product
         </a>{" "}
         for the full feature map.
       </p>
-      <p className="text-xs text-gray-500 mb-10">
+      <p className="text-xs text-muted-2 mb-10">
         All amounts are simulated in US dollars (USD).
       </p>
 
@@ -143,39 +143,39 @@ export default function Pricing() {
               key={t.key}
               type="button"
               onClick={() => handleTierClick(t.key)}
-              className={`text-left border rounded-xl p-5 transition-colors cursor-pointer hover:border-blue-500 ${
+              className={`text-left border rounded-xl p-5 transition-colors cursor-pointer hover:border-brand ${
                 isRecommended
-                  ? "border-blue-500 ring-1 ring-blue-500 bg-blue-950/40"
-                  : "border-gray-800 bg-gray-900/40"
+                  ? "border-brand ring-1 ring-brand bg-brand-soft"
+                  : "border-line bg-surface"
               }`}
             >
               {isRecommended && (
-                <span className="inline-block text-xs font-medium text-blue-400 mb-2">
+                <span className="inline-block text-xs font-medium text-brand mb-2">
                   Matches your input below
                 </span>
               )}
               <h3 className="font-semibold mb-1">{t.name}</h3>
-              <p className="text-2xl font-bold mb-1 text-gray-100">
+              <p className="text-2xl font-bold mb-1 text-ink">
                 ${t.monthlyPrice}
-                <span className="text-sm font-normal text-gray-500">
+                <span className="text-sm font-normal text-muted-2">
                   {" "}
                   USD/mo
                 </span>
               </p>
-              <p className="text-xs text-gray-500 mb-1">
+              <p className="text-xs text-muted-2 mb-1">
                 Public price shown ·{" "}
-                <strong className="font-bold text-gray-300">
+                <strong className="font-bold text-ink-soft">
                   +{Math.round(PRIVATE_PREMIUM * 100)}% extra for private
                 </strong>{" "}
                 (${getPricePerCampus(t, "private")}/mo)
               </p>
-              <p className="text-xs text-gray-500 mb-3">
+              <p className="text-xs text-muted-2 mb-3">
                 {t.maxStudents === Infinity
                   ? "15,000+ students"
                   : `Up to ${t.maxStudents.toLocaleString()} students`}
               </p>
-              <p className="text-sm text-gray-400">{t.blurb}</p>
-              <p className="text-xs text-blue-400 mt-3">
+              <p className="text-sm text-muted">{t.blurb}</p>
+              <p className="text-xs text-brand mt-3">
                 Click to try this plan in the calculator ↓
               </p>
             </button>
@@ -187,7 +187,7 @@ export default function Pricing() {
         {/* Revenue calculator */}
         <section
           ref={calculatorRef}
-          className="border border-gray-800 rounded-xl p-6 scroll-mt-6"
+          className="border border-line rounded-xl p-6 scroll-mt-6"
         >
           <h2 className="text-lg font-semibold mb-4">Revenue calculator</h2>
 
@@ -213,9 +213,9 @@ export default function Pricing() {
               onChange={(e) => setStudentsPerCampus(e.target.value)}
               className={`${INPUT_CLASS} mb-1`}
             />
-            <p className="text-xs text-gray-500 mb-4">
+            <p className="text-xs text-muted-2 mb-4">
               Auto-detected size:{" "}
-              <strong className="text-gray-300">
+              <strong className="text-ink-soft">
                 {SIZE_LABEL[size]} campus
               </strong>{" "}
               (based on students per campus above)
@@ -246,9 +246,9 @@ export default function Pricing() {
                 </option>
               ))}
             </select>
-            <p className="text-xs text-gray-500 mb-4">
+            <p className="text-xs text-muted-2 mb-4">
               Segment for this scenario:{" "}
-              <strong className="text-gray-300">
+              <strong className="text-ink-soft">
                 {SEGMENTS.find((s) => s.key === segment)?.name || segment}
               </strong>
             </p>
@@ -257,14 +257,14 @@ export default function Pricing() {
             <label className="block text-sm font-medium mb-2">
               Billing cycle
             </label>
-            <div className="inline-flex rounded-lg border border-gray-700 overflow-hidden mb-6">
+            <div className="inline-flex rounded-lg border border-line-strong overflow-hidden mb-6">
               <button
                 type="button"
                 onClick={() => setBillingCycle("monthly")}
                 className={`px-4 py-2 text-sm ${
                   billingCycle === "monthly"
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-900 text-gray-300"
+                    ? "bg-brand text-white"
+                    : "bg-surface text-ink-soft"
                 }`}
               >
                 Monthly
@@ -274,30 +274,30 @@ export default function Pricing() {
                 onClick={() => setBillingCycle("annual")}
                 className={`px-4 py-2 text-sm ${
                   billingCycle === "annual"
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-900 text-gray-300"
+                    ? "bg-brand text-white"
+                    : "bg-surface text-ink-soft"
                 }`}
               >
                 Annual (-{Math.round(ANNUAL_DISCOUNT * 100)}%)
               </button>
             </div>
 
-            <div className="bg-gray-900 rounded-lg p-4 mb-6">
-              <p className="text-sm text-gray-400 mb-1">
-                Recommended tier: <strong className="text-gray-200">{result.tier.name}</strong> · $
+            <div className="bg-surface rounded-lg p-4 mb-6">
+              <p className="text-sm text-muted mb-1">
+                Recommended tier: <strong className="text-ink">{result.tier.name}</strong> · $
                 {result.pricePerCampus} USD/mo per campus × {result.campuses}{" "}
                 campus{result.campuses > 1 ? "es" : ""}
               </p>
-              <p className="text-sm text-gray-400 mb-1">
-                Segment: <strong className="text-gray-200">
+              <p className="text-sm text-muted mb-1">
+                Segment: <strong className="text-ink">
                   {SEGMENTS.find((s) => s.key === segment)?.name || segment}
                 </strong>
               </p>
-              <p className="text-2xl font-bold text-gray-100">
+              <p className="text-2xl font-bold text-ink">
                 ${result.displayedRevenue.toLocaleString(undefined, {
                   maximumFractionDigits: 0,
                 })}
-                <span className="text-sm font-normal text-gray-500">
+                <span className="text-sm font-normal text-muted-2">
                   {" "}
                   USD / {billingCycle === "annual" ? "year" : "month"}
                 </span>
@@ -307,12 +307,12 @@ export default function Pricing() {
             <button
               type="submit"
               disabled={saving}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm disabled:opacity-60 hover:bg-blue-700"
+              className="bg-brand text-white px-4 py-2 rounded-lg text-sm disabled:opacity-60 hover:bg-brand-dark"
             >
               {saving ? "Saving…" : "Save scenario"}
             </button>
             {saveMsg && (
-              <p className="text-xs text-gray-500 mt-2">{saveMsg}</p>
+              <p className="text-xs text-muted-2 mt-2">{saveMsg}</p>
             )}
           </form>
         </section>
@@ -320,25 +320,25 @@ export default function Pricing() {
         {/* Assumptions — kept short on purpose since the tier cards above
             already show each plan's price; this only covers what isn't
             already visible there. */}
-        <section className="border border-gray-800 rounded-xl p-6 h-fit">
+        <section className="border border-line rounded-xl p-6 h-fit">
           <h2 className="text-lg font-semibold mb-4">Assumptions</h2>
           <table className="w-full text-sm">
             <tbody>
-              <tr className="border-b border-gray-800">
-                <td className="py-2 text-gray-500">Annual discount</td>
-                <td className="py-2 text-right font-medium text-gray-100">
+              <tr className="border-b border-line">
+                <td className="py-2 text-muted-2">Annual discount</td>
+                <td className="py-2 text-right font-medium text-ink">
                   {Math.round(ANNUAL_DISCOUNT * 100)}% off the monthly rate
                 </td>
               </tr>
-              <tr className="border-b border-gray-800">
-                <td className="py-2 text-gray-500">Private premium</td>
-                <td className="py-2 text-right font-medium text-gray-100">
+              <tr className="border-b border-line">
+                <td className="py-2 text-muted-2">Private premium</td>
+                <td className="py-2 text-right font-medium text-ink">
                   +{Math.round(PRIVATE_PREMIUM * 100)}% vs. public, per campus
                 </td>
               </tr>
               <tr>
-                <td className="py-2 text-gray-500">Pricing basis</td>
-                <td className="py-2 text-right font-medium text-gray-100">
+                <td className="py-2 text-muted-2">Pricing basis</td>
+                <td className="py-2 text-right font-medium text-ink">
                   Flat fee per campus, not per student seat
                 </td>
               </tr>
@@ -351,15 +351,15 @@ export default function Pricing() {
       <section className="mt-12">
         <h2 className="text-lg font-semibold mb-4">Saved scenarios</h2>
         {loading ? (
-          <p className="text-sm text-gray-500">Loading…</p>
+          <p className="text-sm text-muted-2">Loading…</p>
         ) : scenarios.length === 0 ? (
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-muted-2">
             No scenarios saved yet — build one above and save it.
           </p>
         ) : (
-          <div className="overflow-x-auto border border-gray-800 rounded-xl">
+          <div className="overflow-x-auto border border-line rounded-xl">
             <table className="w-full text-sm">
-              <thead className="bg-gray-900">
+              <thead className="bg-surface">
                 <tr>
                   <th className="text-left p-3 font-medium">University</th>
                   <th className="text-left p-3 font-medium">Segment</th>
@@ -373,23 +373,23 @@ export default function Pricing() {
               </thead>
               <tbody>
                 {scenarios.map((s) => (
-                  <tr key={s.id} className="border-t border-gray-800">
-                    <td className="p-3 text-gray-100">{s.scenario_name}</td>
-                    <td className="p-3 text-gray-100">
+                  <tr key={s.id} className="border-t border-line">
+                    <td className="p-3 text-ink">{s.scenario_name}</td>
+                    <td className="p-3 text-ink">
                       {SEGMENTS.find((seg) => seg.key === s.segment)?.name ||
                         s.segment}
                     </td>
-                    <td className="p-3 capitalize text-gray-100">{s.tier}</td>
-                    <td className="p-3 text-right text-gray-100">
+                    <td className="p-3 capitalize text-ink">{s.tier}</td>
+                    <td className="p-3 text-right text-ink">
                       {Number(s.students_per_campus).toLocaleString()}
                     </td>
-                    <td className="p-3 text-right text-gray-100">
+                    <td className="p-3 text-right text-ink">
                       {s.campuses}
                     </td>
-                    <td className="p-3 capitalize text-gray-100">
+                    <td className="p-3 capitalize text-ink">
                       {s.billing_cycle}
                     </td>
-                    <td className="p-3 text-right text-gray-100">
+                    <td className="p-3 text-right text-ink">
                       $
                       {Number(
                         s.billing_cycle === "annual"
@@ -401,7 +401,7 @@ export default function Pricing() {
                     <td className="p-3 text-right">
                       <button
                         onClick={() => handleDelete(s.id)}
-                        className="text-xs text-red-400 hover:underline"
+                        className="text-xs text-danger hover:underline"
                       >
                         Delete
                       </button>

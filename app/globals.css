@@ -1,25 +1,123 @@
 @import "tailwindcss";
 
-:root {
-  --background: #000000;
-  --foreground: #f5f5f5;
+/* Design tokens. One light, warm, editorial system for the whole site.
+   Change a color here and every page follows. */
+@theme {
+  --color-paper: #f7f2e8;
+  --color-paper-2: #efe8d8;
+  --color-surface: #ffffff;
+  --color-ink: #0f1b2d;
+  --color-ink-soft: #2c3a4f;
+  --color-muted: #536074;
+  --color-muted-2: #667386;
+  --color-line: #ddd3c0;
+  --color-line-strong: #c9bda6;
+  --color-brand: #d8281e;
+  --color-brand-dark: #b01e15;
+  --color-brand-soft: #fbe4e0;
+  --color-navy: #0e2a47;
+  --color-navy-2: #16385c;
+  --color-sun: #ffc93c;
+  --color-ok: #14795f;
+  --color-danger: #b42318;
+
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --shadow-pop: 0 1px 0 rgb(15 27 45 / 0.04), 0 12px 32px -12px rgb(15 27 45 / 0.25);
+  --shadow-hard: 6px 6px 0 0 var(--color-ink);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
 }
 
-/* Background and text color are set by Tailwind classes on <body> in
-   layout.js (bg-black text-gray-100), not here. An earlier version of this
-   file set them again on the plain `body` selector below — since that rule
-   sits outside any Tailwind layer, it silently outranked the Tailwind
-   classes on body regardless of specificity, which is how the app ended up
-   with mismatched colors before. Keeping this rule to font-family only
-   avoids that trap. */
-
+/* Body colors come from the Tailwind classes on <body> in layout.js.
+   (Learned the hard way in Week 3: a plain `body { color }` rule outside a
+   layer silently outranks utility classes, so keep font-family only.) */
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background: var(--color-sun);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-navy);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@layer components {
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-brand;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 cursor-pointer disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 bg-brand text-white hover:bg-brand-dark hover:-translate-y-0.5 active:translate-y-0;
+    box-shadow: 0 8px 20px -8px rgb(216 40 30 / 0.7);
+  }
+  .btn-dark {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 bg-ink text-white hover:bg-navy-2 hover:-translate-y-0.5;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 border border-line-strong bg-surface text-ink hover:border-ink hover:-translate-y-0.5;
+  }
+  .btn-sm {
+    @apply px-4 py-2 text-xs;
+  }
+  .card {
+    @apply rounded-2xl border border-line bg-surface;
+  }
+  .chip {
+    @apply inline-flex items-center rounded-full border border-line-strong bg-surface px-3 py-1 text-xs font-medium text-ink-soft;
+  }
+  .field {
+    @apply w-full rounded-xl border border-line-strong bg-surface px-4 py-3 text-sm text-ink placeholder:text-muted-2 focus:outline-none focus:ring-2 focus:ring-brand;
+  }
+}
+
+/* Small motion helpers (no libraries). Respect reduced motion. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.4; }
+}
+.rise { animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.ticker-track { animation: ticker 38s linear infinite; }
+.pulse-dot { animation: pulse-dot 1.8s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise, .ticker-track, .pulse-dot { animation: none; }
+}
+
+/* Subtle paper grain + grid used on hero/sections */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(15 27 45 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(15 27 45 / 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+.mark-sun {
+  background: linear-gradient(transparent 62%, var(--color-sun) 62%, var(--color-sun) 92%, transparent 92%);
 }
