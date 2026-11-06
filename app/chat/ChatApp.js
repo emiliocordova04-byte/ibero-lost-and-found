@@ -141,7 +141,7 @@ export default function ChatApp() {
           <span className="chip">Rule-based, not AI</span>
         </div>
 
-        <div className="h-[28rem] space-y-3 overflow-y-auto px-4 py-4" role="log" aria-live="polite">
+        <div className="h-[min(28rem,calc(100vh-24rem))] min-h-[15rem] space-y-3 overflow-y-auto px-4 py-4" role="log" aria-live="polite">
           {messages.map((m, i) => (
             <Bubble key={i} m={m} />
           ))}
