@@ -8,6 +8,7 @@ const LINKS = [
   { href: "/product", label: "Product" },
   { href: "/pricing", label: "Pricing" },
   { href: "/marketing", label: "Marketing" },
+  { href: "/chat", label: "Report an item" },
   { href: "/research", label: "Research" },
   { href: "/core", label: "Live demo" },
   { href: "/docs", label: "Docs" },

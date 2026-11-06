@@ -17,6 +17,7 @@ const FOOTER_COLS = [
       { href: "/product", label: "Product" },
       { href: "/pricing", label: "Pricing simulator" },
       { href: "/core", label: "Live item demo" },
+      { href: "/chat", label: "Report an item (chat)" },
     ],
   },
   {

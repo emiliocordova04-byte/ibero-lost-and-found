@@ -100,7 +100,7 @@ export default function ChatApp() {
 
     setChat(result.state);
     setMessages(transcript);
-    if (result.state.step === "item" && result.state.answers.item === "" && text.match(/^(restart|reiniciar)/i)) {
+    if (chat.saved && !result.state.saved) {
       setSessionId(null);
       setRated(false);
       setComment("");

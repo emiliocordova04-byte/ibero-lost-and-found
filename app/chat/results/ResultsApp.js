@@ -1,0 +1,146 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
+import { summarizeSessions } from "@/lib/chatStats.mjs";
+
+function Kpi({ label, value }) {
+  return (
+    <div className="card p-4 text-center">
+      <div className="font-display text-3xl font-extrabold">{value}</div>
+      <div className="mt-1 text-xs uppercase tracking-wider text-muted-2">{label}</div>
+    </div>
+  );
+}
+
+export default function ResultsApp() {
+  const [rows, setRows] = useState(null);
+  const [error, setError] = useState("");
+  const [open, setOpen] = useState(null);
+  const [onlyTests, setOnlyTests] = useState(false);
+
+  async function load() {
+    setError("");
+    const { data, error: err } = await supabase
+      .from("chat_sessions")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(200);
+    if (err) {
+      setError("Could not load the saved sessions. Check the connection and try again.");
+      setRows([]);
+      return;
+    }
+    setRows(data || []);
+  }
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  const shown = useMemo(() => (rows || []).filter((r) => (onlyTests ? r.test_tag : true)), [rows, onlyTests]);
+  const stats = useMemo(() => summarizeSessions(shown), [shown]);
+
+  return (
+    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
+      <p className="eyebrow">Week 5 · Staff and test summary</p>
+      <h1 className="mt-2 text-3xl font-extrabold sm:text-4xl">Chat results</h1>
+      <p className="mt-3 max-w-2xl text-muted">
+        Every confirmed report from <a className="underline hover:text-brand" href="/chat">/chat</a>, with its rating.
+        Transcripts are stored with phone numbers and emails already removed.
+      </p>
+
+      <div className="mt-6 flex flex-wrap items-center gap-3">
+        <button type="button" className="btn-ghost btn-sm" onClick={load}>
+          Refresh
+        </button>
+        <label className="flex cursor-pointer items-center gap-2 text-sm">
+          <input type="checkbox" checked={onlyTests} onChange={(e) => setOnlyTests(e.target.checked)} />
+          Only user tests (reports with a test tag)
+        </label>
+      </div>
+
+      {error && <p className="mt-4 text-danger">{error}</p>}
+      {rows === null && !error && <p className="mt-4 text-muted">Loading...</p>}
+
+      {rows !== null && (
+        <>
+          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-5">
+            <Kpi label="Sessions" value={stats.sessions} />
+            <Kpi label="Rated" value={stats.rated} />
+            <Kpi
+              label="Thumbs up"
+              value={stats.thumbsUpRate === null ? "n/a" : `${Math.round(stats.thumbsUpRate * 100)}%`}
+            />
+            <Kpi label="Guardrail replies" value={stats.guardrailHits} />
+            <Kpi label="User tests" value={stats.userTests} />
+          </div>
+
+          <div className="card mt-6 overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-paper-2 text-xs uppercase tracking-wider text-muted-2">
+                <tr>
+                  <th className="px-3 py-3">When</th>
+                  <th className="px-3 py-3">Item</th>
+                  <th className="px-3 py-3">Place</th>
+                  <th className="px-3 py-3">Status</th>
+                  <th className="px-3 py-3">Priority</th>
+                  <th className="px-3 py-3">Rating</th>
+                  <th className="px-3 py-3">Test</th>
+                </tr>
+              </thead>
+              <tbody>
+                {shown.length === 0 && (
+                  <tr>
+                    <td colSpan={7} className="px-3 py-6 text-center text-muted">
+                      No saved sessions yet. Finish a report in /chat and it will appear here.
+                    </td>
+                  </tr>
+                )}
+                {shown.map((r) => (
+                  <>
+                    <tr
+                      key={r.id}
+                      className="cursor-pointer border-t border-line hover:bg-paper"
+                      onClick={() => setOpen(open === r.id ? null : r.id)}
+                    >
+                      <td className="px-3 py-3">{new Date(r.created_at).toLocaleString()}</td>
+                      <td className="px-3 py-3 font-medium">{r.item}</td>
+                      <td className="px-3 py-3">{r.place}</td>
+                      <td className="px-3 py-3">{String(r.status).replaceAll("_", " ")}</td>
+                      <td className="px-3 py-3">{r.priority ? "yes" : "no"}</td>
+                      <td className="px-3 py-3">{r.rating === "up" ? "👍" : r.rating === "down" ? "👎" : "-"}</td>
+                      <td className="px-3 py-3">{r.test_tag || "-"}</td>
+                    </tr>
+                    {open === r.id && (
+                      <tr key={`${r.id}-t`} className="border-t border-line bg-paper">
+                        <td colSpan={7} className="px-4 py-4 text-sm">
+                          {r.feedback && (
+                            <p className="mb-3">
+                              <strong>Comment:</strong> {r.feedback}
+                            </p>
+                          )}
+                          <p className="mb-2 text-xs uppercase tracking-wider text-muted-2">
+                            Transcript ({r.lang === "es" ? "Spanish" : "English"}, {r.guardrail_hits} guardrail replies)
+                          </p>
+                          <ul className="space-y-1">
+                            {(r.transcript || []).map((m, i) => (
+                              <li key={i}>
+                                <span className="font-semibold">{m.role === "user" ? "Student" : "Assistant"}:</span>{" "}
+                                <span className="whitespace-pre-line">{m.text}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </td>
+                      </tr>
+                    )}
+                  </>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
