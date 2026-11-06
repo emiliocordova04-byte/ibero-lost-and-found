@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import { summarizeSessions } from "@/lib/chatStats.mjs";
+import { summarizeSessions, isTesterTag } from "@/lib/chatStats.mjs";
 
 function Kpi({ label, value }) {
   return (
@@ -38,7 +38,7 @@ export default function ResultsApp() {
     load();
   }, []);
 
-  const shown = useMemo(() => (rows || []).filter((r) => (onlyTests ? r.test_tag : true)), [rows, onlyTests]);
+  const shown = useMemo(() => (rows || []).filter((r) => (onlyTests ? isTesterTag(r.test_tag) : true)), [rows, onlyTests]);
   const stats = useMemo(() => summarizeSessions(shown), [shown]);
 
   return (
@@ -56,7 +56,7 @@ export default function ResultsApp() {
         </button>
         <label className="flex cursor-pointer items-center gap-2 text-sm">
           <input type="checkbox" checked={onlyTests} onChange={(e) => setOnlyTests(e.target.checked)} />
-          Only user tests (reports with a test tag)
+          Only external user tests (tags T1, T2, T3)
         </label>
       </div>
 
