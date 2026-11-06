@@ -7,7 +7,7 @@ import { summarizeTest, verdictFor } from "@/lib/abstats.mjs";
 import { scoreHeadline } from "@/lib/headlineScore.mjs";
 import { Section, Badge, CopyButton, SaveButton } from "./ui";
 
-const MIN_PER_VARIANT = 30;
+const MIN_PER_VARIANT = 10;
 
 function fmtPct(x) {
   return `${(x * 100).toFixed(1)}%`;

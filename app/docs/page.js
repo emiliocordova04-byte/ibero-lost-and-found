@@ -155,7 +155,7 @@ export default function Docs() {
         are independent. One impression and one click are recorded per visitor
         per test. <code>/marketing</code> reads the counts and runs a
         two-proportion z-test (<code>lib/abstats.mjs</code>), and says &quot;not
-        enough data&quot; until each variant has at least 30 visitors. Add{" "}
+        enough data&quot; until each variant has at least 10 visitors. Add{" "}
         <code>?ab_hero_headline=B</code> or <code>?ab_cta_label=B</code> to
         preview a variant without being counted.
       </p>
