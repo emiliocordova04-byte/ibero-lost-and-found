@@ -167,9 +167,9 @@ export default function Docs() {
         <li><code>ab_events</code> &mdash; id, created_at, test_key, variant (A / B), event (impression / click), visitor_id; unique on (test_key, visitor_id, event)</li>
       </ul>
       <p className="text-muted mt-3">
-        Tests: <code>npm test</code> runs 21 tests (10 from Week 3, 11 new
-        covering A/B assignment, the z-test, content integrity, exporters and
-        the headline checker). Scope cut this week: no real AI generation, no
+        Tests: <code>npm test</code> runs 23 tests (10 from Week 3, 13 new
+        covering A/B assignment and event logging, the z-test, content
+        integrity, exporters and the headline checker). Scope cut this week: no real AI generation, no
         auto-posting to social networks, no login, no paid analytics.
       </p>
 

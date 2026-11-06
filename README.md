@@ -30,7 +30,7 @@ npm run dev
 
 ## Tests
 
-`npm test` runs 21 tests with Node's built-in runner (pricing logic, A/B assignment and statistics, content integrity, exporters, headline checker).
+`npm test` runs 23 tests with Node's built-in runner (pricing logic, A/B assignment, event logging and statistics, content integrity, exporters, headline checker).
 
 ## Database setup
 
