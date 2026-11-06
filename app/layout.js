@@ -3,6 +3,7 @@ import "@fontsource-variable/dm-sans";
 import "./globals.css";
 import Nav from "./components/Nav";
 import Logo from "./components/Logo";
+import ChatWidget from "./components/ChatWidget";
 
 export const metadata = {
   title: "Ibero Lost & Found | Lost and found for university campuses",
@@ -75,6 +76,7 @@ export default function RootLayout({ children }) {
             </div>
           </div>
         </footer>
+        <ChatWidget />
       </body>
     </html>
   );

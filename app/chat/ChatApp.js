@@ -30,13 +30,34 @@ function Bubble({ m }) {
             Guardrail
           </span>
         )}
-        {m.text}
+        {m.kind === "confirm" && m.card ? <ConfirmCard card={m.card} /> : m.text}
       </div>
     </div>
   );
 }
 
-export default function ChatApp() {
+function ConfirmCard({ card }) {
+  return (
+    <div>
+      <p className="font-semibold">{card.title}</p>
+      <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5">
+        {card.rows.map((r) => (
+          <div key={r.label} className="contents">
+            <dt className="text-xs font-semibold uppercase tracking-wider text-muted-2">{r.label}</dt>
+            <dd className="font-medium">{r.value}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="mt-3 inline-block rounded-full border border-line-strong bg-paper-2 px-3 py-1 text-xs font-semibold">
+        {card.status}
+      </p>
+      {card.priorityNote && <p className="mt-2 text-xs text-ink-soft">{card.priorityNote}</p>}
+      <p className="mt-3 font-semibold">{card.ask}</p>
+    </div>
+  );
+}
+
+export default function ChatApp({ compact = false }) {
   const first = useMemo(() => startChat("en"), []);
   const [chat, setChat] = useState(first.state);
   const [messages, setMessages] = useState(() => first.replies.map((r) => ({ ...r, role: "bot" })));
@@ -50,11 +71,12 @@ export default function ChatApp() {
   const endRef = useRef(null);
 
   useEffect(() => {
+    if (compact) return; // the floating widget is never part of a user test
     try {
       const tag = new URLSearchParams(window.location.search).get("test");
       if (tag) setTestTag(tag.slice(0, 20));
     } catch {}
-  }, []);
+  }, [compact]);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -127,21 +149,32 @@ export default function ChatApp() {
   const saved = chat.step === "done" && sessionId;
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
-      <p className="eyebrow">Week 5 · Guided assistant</p>
-      <h1 className="mt-2 text-3xl font-extrabold sm:text-4xl">Report a lost or found item</h1>
-      <p className="mt-3 max-w-2xl text-muted">
-        Three short questions, then a summary you confirm. A staff member reviews every report. Works in English and
-        Spanish.
-      </p>
+    <div className={compact ? "flex h-full flex-col" : "mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12"}>
+      {!compact && (
+        <>
+          <p className="eyebrow">Week 5 · Guided assistant</p>
+          <h1 className="mt-2 text-3xl font-extrabold sm:text-4xl">Report a lost or found item</h1>
+          <p className="mt-3 max-w-2xl text-muted">
+            Three short questions, then a summary you confirm. A staff member reviews every report. Works in English and
+            Spanish.
+          </p>
+        </>
+      )}
 
-      <section className="card mt-6 overflow-hidden" aria-label="Chat with the lost and found assistant">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-paper-2 px-4 py-3">
+      <section
+        className={compact ? "flex min-h-0 flex-1 flex-col overflow-hidden bg-surface" : "card mt-6 overflow-hidden"}
+        aria-label="Chat with the lost and found assistant"
+      >
+        <div className={`flex flex-wrap items-center justify-between gap-2 border-b border-line bg-paper-2 px-4 py-3 ${compact ? "hidden" : ""}`}>
           <span className="font-display text-sm font-bold">Lost-item assistant</span>
           <span className="chip">Rule-based, not AI</span>
         </div>
 
-        <div className="h-[min(28rem,calc(100vh-31rem))] min-h-[14rem] space-y-3 overflow-y-auto px-4 py-4" role="log" aria-live="polite">
+        <div
+          className={`space-y-3 overflow-y-auto px-4 py-4 ${compact ? "min-h-0 flex-1" : "h-[min(28rem,calc(100vh-31rem))] min-h-[14rem]"}`}
+          role="log"
+          aria-live="polite"
+        >
           {messages.map((m, i) => (
             <Bubble key={i} m={m} />
           ))}
@@ -205,8 +238,14 @@ export default function ChatApp() {
             Send
           </button>
         </form>
+        {compact && (
+          <p className="border-t border-line bg-paper-2 px-3 pb-2 text-[11px] leading-snug text-muted-2">
+            Do not share phone numbers, emails or ID numbers. They are removed before saving.
+          </p>
+        )}
       </section>
 
+      {!compact && (
       <div className="mt-4 space-y-1 text-xs text-muted-2">
         <p>
           Do not share phone numbers, emails or ID numbers in this chat. They are removed before anything is saved.
@@ -216,6 +255,7 @@ export default function ChatApp() {
           Staff and test summary: <a className="underline hover:text-brand" href="/chat/results">/chat/results</a>
         </p>
       </div>
+      )}
     </div>
   );
 }
