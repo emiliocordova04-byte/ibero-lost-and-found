@@ -1,7 +1,7 @@
 "use client";
 
 // Public guided assistant. All conversation rules live in lib/chatLogic.mjs
-// (a rule-based state machine, not an AI model). This file only renders the
+// (a rule-based state machine). This file only renders the
 // messages, saves the confirmed report and the rating to Supabase.
 
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -167,7 +167,7 @@ export default function ChatApp({ compact = false }) {
       >
         <div className={`flex flex-wrap items-center justify-between gap-2 border-b border-line bg-paper-2 px-4 py-3 ${compact ? "hidden" : ""}`}>
           <span className="font-display text-sm font-bold">Lost-item assistant</span>
-          <span className="chip">Rule-based, not AI</span>
+          <span className="chip">Automated assistant</span>
         </div>
 
         <div
@@ -249,7 +249,7 @@ export default function ChatApp({ compact = false }) {
       <div className="mt-4 space-y-1 text-xs text-muted-2">
         <p>
           Do not share phone numbers, emails or ID numbers in this chat. They are removed before anything is saved.
-          This prototype has no live agent and no login.
+          Every confirmed report is read by Student Services staff.
         </p>
         <p>
           Staff and test summary: <a className="underline hover:text-brand" href="/chat/results">/chat/results</a>

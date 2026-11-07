@@ -33,7 +33,7 @@ export default function ChatWidget() {
           <div className="flex items-center justify-between gap-2 border-b-2 border-ink bg-navy px-4 py-3 text-white">
             <div>
               <p className="font-display text-sm font-bold leading-tight">Lost and found help</p>
-              <p className="text-[11px] opacity-80">Rule-based assistant, not AI</p>
+              <p className="text-[11px] opacity-80">Automated assistant</p>
             </div>
             <button
               type="button"
