@@ -27,6 +27,7 @@ const FOOTER_COLS = [
       { href: "/marketing", label: "Marketing engine" },
       { href: "/research", label: "Market research" },
       { href: "/docs", label: "Docs" },
+      { href: "/chat/results", label: "Staff view (chat results)" },
     ],
   },
 ];

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import { summarizeSessions, isTesterTag } from "@/lib/chatStats.mjs";
+import { summarizeSessions, isTesterTag, STATUS_OPTIONS, isValidStatus, statusLabel } from "@/lib/chatStats.mjs";
 
 function Kpi({ label, value }) {
   return (
@@ -38,6 +38,18 @@ export default function ResultsApp() {
     load();
   }, []);
 
+  async function setStatus(id, value) {
+    if (!isValidStatus(value)) return;
+    const before = rows;
+    setError("");
+    setRows((list) => list.map((r) => (r.id === id ? { ...r, status: value } : r)));
+    const { error: err } = await supabase.from("chat_sessions").update({ status: value }).eq("id", id);
+    if (err) {
+      setRows(before);
+      setError("Could not update the status. Nothing was changed. Please try again.");
+    }
+  }
+
   const shown = useMemo(() => (rows || []).filter((r) => (onlyTests ? isTesterTag(r.test_tag) : true)), [rows, onlyTests]);
   const stats = useMemo(() => summarizeSessions(shown), [shown]);
 
@@ -47,7 +59,13 @@ export default function ResultsApp() {
       <h1 className="mt-2 text-3xl font-extrabold sm:text-4xl">Chat results</h1>
       <p className="mt-3 max-w-2xl text-muted">
         Every confirmed report from <a className="underline hover:text-brand" href="/chat">/chat</a>, with its rating.
-        Transcripts are stored with phone numbers and emails already removed.
+        Transcripts are stored with phone numbers and emails already removed. Staff change a report to found,
+        returned or closed with the Status menu. Priority marks sensitive items (documents, electronics, keys) that
+        staff should look at first.
+      </p>
+      <p className="mt-2 max-w-2xl text-xs text-muted-2">
+        Demo staff view: there is no staff login yet, so anyone with this link can change a status. A login is the
+        first thing to add before real use.
       </p>
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -65,7 +83,7 @@ export default function ResultsApp() {
 
       {rows !== null && (
         <>
-          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-5">
+          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-6">
             <Kpi label="Sessions" value={stats.sessions} />
             <Kpi label="Rated" value={stats.rated} />
             <Kpi
@@ -74,6 +92,7 @@ export default function ResultsApp() {
             />
             <Kpi label="Guardrail replies" value={stats.guardrailHits} />
             <Kpi label="User tests" value={stats.userTests} />
+            <Kpi label="Returned" value={stats.returned} />
           </div>
 
           <div className="card mt-6 overflow-x-auto">
@@ -107,8 +126,21 @@ export default function ResultsApp() {
                       <td className="px-3 py-3">{new Date(r.created_at).toLocaleString()}</td>
                       <td className="px-3 py-3 font-medium">{r.item}</td>
                       <td className="px-3 py-3">{r.place}</td>
-                      <td className="px-3 py-3">{String(r.status).replaceAll("_", " ")}</td>
-                      <td className="px-3 py-3">{r.priority ? "yes" : "no"}</td>
+                      <td className="px-3 py-3" onClick={(e) => e.stopPropagation()}>
+                        <select
+                          className="field py-1.5 text-sm"
+                          value={r.status}
+                          aria-label={`Status of ${r.item}`}
+                          onChange={(e) => setStatus(r.id, e.target.value)}
+                        >
+                          {STATUS_OPTIONS.map((o) => (
+                            <option key={o.value} value={o.value}>
+                              {o.label}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+                      <td className="px-3 py-3">{r.priority ? "Priority" : "-"}</td>
                       <td className="px-3 py-3">{r.rating === "up" ? "👍" : r.rating === "down" ? "👎" : "-"}</td>
                       <td className="px-3 py-3">{r.test_tag || "-"}</td>
                     </tr>

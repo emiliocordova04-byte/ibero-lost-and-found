@@ -6,7 +6,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import { startChat, nextTurn, buildSessionRow, validateRating } from "@/lib/chatLogic.mjs";
+import { startChat, nextTurn, buildSessionRow, validateRating, RATING_COPY } from "@/lib/chatLogic.mjs";
 
 function Bubble({ m }) {
   const mine = m.role === "user";
@@ -67,6 +67,7 @@ export default function ChatApp({ compact = false }) {
   const [rated, setRated] = useState(false);
   const [comment, setComment] = useState("");
   const [note, setNote] = useState("");
+  const [askWhy, setAskWhy] = useState(false);
   const [testTag, setTestTag] = useState(null);
   const endRef = useRef(null);
 
@@ -125,12 +126,14 @@ export default function ChatApp({ compact = false }) {
     if (chat.saved && !result.state.saved) {
       setSessionId(null);
       setRated(false);
+      setAskWhy(false);
       setComment("");
     }
   }
 
-  async function rate(value) {
-    const check = validateRating(value, comment);
+  async function rate(value, reason = "") {
+    const text = [reason, comment.trim()].filter(Boolean).join(": ");
+    const check = validateRating(value, text);
     if (!check.ok || !sessionId || rated) return;
     setBusy(true);
     const { error } = await supabase
@@ -143,7 +146,9 @@ export default function ChatApp({ compact = false }) {
       return;
     }
     setRated(true);
-    setNote(chat.lang === "es" ? "¡Gracias por tu opinión!" : "Thank you for your feedback!");
+    setAskWhy(false);
+    const rc = RATING_COPY[chat.lang] || RATING_COPY.en;
+    setNote(check.rating === "down" ? `${rc.thanksDown} ${rc.contactNote}` : rc.thanksUp);
   }
 
   const saved = chat.step === "done" && sessionId;
@@ -196,10 +201,23 @@ export default function ChatApp({ compact = false }) {
                     <button type="button" className="btn-ghost btn-sm" disabled={busy} onClick={() => rate("up")}>
                       <span aria-hidden="true">👍</span> Thumbs up
                     </button>
-                    <button type="button" className="btn-ghost btn-sm" disabled={busy} onClick={() => rate("down")}>
+                    <button type="button" className="btn-ghost btn-sm" disabled={busy} onClick={() => setAskWhy(true)}>
                       <span aria-hidden="true">👎</span> Thumbs down
                     </button>
                   </div>
+                  {askWhy && (
+                    <div className="mt-3 rounded-xl border border-line-strong bg-surface p-3">
+                      <p className="font-semibold">{(RATING_COPY[chat.lang] || RATING_COPY.en).askWhy}</p>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {(RATING_COPY[chat.lang] || RATING_COPY.en).reasons.map((r) => (
+                          <button key={r} type="button" className="chip hover:border-ink" disabled={busy} onClick={() => rate("down", r)}>
+                            {r}
+                          </button>
+                        ))}
+                      </div>
+                      <p className="mt-3 text-xs text-ink-soft">{(RATING_COPY[chat.lang] || RATING_COPY.en).contactNote}</p>
+                    </div>
+                  )}
                   {note && <p className="mt-2 text-danger">{note}</p>}
                 </>
               )}

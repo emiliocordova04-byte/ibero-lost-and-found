@@ -12,6 +12,7 @@ const LINKS = [
   { href: "/research", label: "Research" },
   { href: "/core", label: "Live demo" },
   { href: "/docs", label: "Docs" },
+  { href: "/chat/results", label: "Staff view" },
 ];
 
 export default function Nav() {
