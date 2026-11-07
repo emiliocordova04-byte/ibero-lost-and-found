@@ -81,7 +81,7 @@ export default function ChatApp({ compact = false }) {
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [messages, sessionId, rated]);
+  }, [messages, sessionId, rated, askWhy]);
 
   const lastBot = [...messages].reverse().find((m) => m.role === "bot");
   const chips = lastBot?.chips || [];
