@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import { summarizeSessions, isTesterTag, STATUS_OPTIONS, isValidStatus, statusLabel } from "@/lib/chatStats.mjs";
+import { summarizeSessions, isTesterTag, filterByView, STATUS_OPTIONS, isValidStatus, statusLabel } from "@/lib/chatStats.mjs";
 
 function Kpi({ label, value }) {
   return (
@@ -18,20 +18,27 @@ export default function ResultsApp() {
   const [error, setError] = useState("");
   const [open, setOpen] = useState(null);
   const [onlyTests, setOnlyTests] = useState(false);
+  const [view, setView] = useState("open");
+  const [loading, setLoading] = useState(false);
+  const [updatedAt, setUpdatedAt] = useState(null);
+  const [toast, setToast] = useState("");
 
   async function load() {
     setError("");
+    setLoading(true);
     const { data, error: err } = await supabase
       .from("chat_sessions")
       .select("*")
       .order("created_at", { ascending: false })
       .limit(200);
+    setLoading(false);
     if (err) {
       setError("Could not load the saved sessions. Check the connection and try again.");
-      setRows([]);
+      setRows((old) => old || []);
       return;
     }
     setRows(data || []);
+    setUpdatedAt(new Date());
   }
 
   useEffect(() => {
@@ -42,16 +49,22 @@ export default function ResultsApp() {
     if (!isValidStatus(value)) return;
     const before = rows;
     setError("");
+    setToast("");
     setRows((list) => list.map((r) => (r.id === id ? { ...r, status: value } : r)));
     const { error: err } = await supabase.from("chat_sessions").update({ status: value }).eq("id", id);
     if (err) {
       setRows(before);
       setError("Could not update the status. Nothing was changed. Please try again.");
+      return;
+    }
+    if (value === "returned" || value === "closed") {
+      setToast(`Moved to "Returned and closed". Nothing was deleted. You can see it with the Returned and closed tab.`);
     }
   }
 
-  const shown = useMemo(() => (rows || []).filter((r) => (onlyTests ? isTesterTag(r.test_tag) : true)), [rows, onlyTests]);
-  const stats = useMemo(() => summarizeSessions(shown), [shown]);
+  const scoped = useMemo(() => (rows || []).filter((r) => (onlyTests ? isTesterTag(r.test_tag) : true)), [rows, onlyTests]);
+  const shown = useMemo(() => filterByView(scoped, view), [scoped, view]);
+  const stats = useMemo(() => summarizeSessions(scoped), [scoped]);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
@@ -60,7 +73,7 @@ export default function ResultsApp() {
       <p className="mt-3 max-w-2xl text-muted">
         Every confirmed report from <a className="underline hover:text-brand" href="/chat">/chat</a>, with its rating.
         Transcripts are stored with phone numbers and emails already removed. Staff change a report to found,
-        returned or closed with the Status menu. Priority marks sensitive items (documents, electronics, keys) that
+        returned or closed with the Status menu: returned and closed reports leave the Open list but are never deleted. Priority marks sensitive items (documents, electronics, keys) that
         staff should look at first.
       </p>
       <p className="mt-2 max-w-2xl text-xs text-muted-2">
@@ -69,9 +82,10 @@ export default function ResultsApp() {
       </p>
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
-        <button type="button" className="btn-ghost btn-sm" onClick={load}>
-          Refresh
+        <button type="button" className="btn-ghost btn-sm" onClick={load} disabled={loading}>
+          {loading ? "Refreshing..." : "Refresh"}
         </button>
+        {updatedAt && <span className="text-xs text-muted-2">Updated {updatedAt.toLocaleTimeString()}</span>}
         <label className="flex cursor-pointer items-center gap-2 text-sm">
           <input type="checkbox" checked={onlyTests} onChange={(e) => setOnlyTests(e.target.checked)} />
           Only external user tests (tags T1, T2, T3)
@@ -79,6 +93,7 @@ export default function ResultsApp() {
       </div>
 
       {error && <p className="mt-4 text-danger">{error}</p>}
+      {toast && <p className="mt-4 rounded-xl border border-line-strong bg-paper-2 px-4 py-2 text-sm">{toast}</p>}
       {rows === null && !error && <p className="mt-4 text-muted">Loading...</p>}
 
       {rows !== null && (
@@ -95,7 +110,26 @@ export default function ResultsApp() {
             <Kpi label="Returned" value={stats.returned} />
           </div>
 
-          <div className="card mt-6 overflow-x-auto">
+          <div className="mt-6 flex flex-wrap gap-2" role="tablist" aria-label="Report list">
+            {[
+              ["open", `Open (${stats.open})`],
+              ["resolved", `Returned and closed (${stats.resolved})`],
+              ["all", `All (${stats.sessions})`],
+            ].map(([v, label]) => (
+              <button
+                key={v}
+                type="button"
+                role="tab"
+                aria-selected={view === v}
+                onClick={() => setView(v)}
+                className={view === v ? "btn-primary btn-sm" : "btn-ghost btn-sm"}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          <div className="card mt-3 overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead className="bg-paper-2 text-xs uppercase tracking-wider text-muted-2">
                 <tr>
@@ -112,7 +146,7 @@ export default function ResultsApp() {
                 {shown.length === 0 && (
                   <tr>
                     <td colSpan={7} className="px-3 py-6 text-center text-muted">
-                      No saved sessions yet. Finish a report in /chat and it will appear here.
+                      {view === "open" ? "No open reports. Reports marked returned or closed are in the Returned and closed tab." : view === "resolved" ? "Nothing returned or closed yet." : "No saved sessions yet. Finish a report in /chat and it will appear here."}
                     </td>
                   </tr>
                 )}
@@ -140,7 +174,7 @@ export default function ResultsApp() {
                           ))}
                         </select>
                       </td>
-                      <td className="px-3 py-3">{r.priority ? "Priority" : "-"}</td>
+                      <td className="px-3 py-3">{r.priority ? <span className="rounded-full border border-danger px-2 py-0.5 text-xs font-semibold text-danger">Priority</span> : "-"}</td>
                       <td className="px-3 py-3">{r.rating === "up" ? "👍" : r.rating === "down" ? "👎" : "-"}</td>
                       <td className="px-3 py-3">{r.test_tag || "-"}</td>
                     </tr>
