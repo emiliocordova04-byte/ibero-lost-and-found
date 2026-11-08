@@ -4,7 +4,7 @@ import { ALL_ROUTES } from "../lib/venture.mjs";
 
 const base = (process.argv[2] || "https://ibero-lost-and-found.vercel.app").replace(/\/$/, "");
 const EXPECT = {
-  "/": "Lost", "/demo": "Guided demo", "/chat": "Lost", "/dashboard": "Dashboard", "/agents": "Agent",
+  "/": "Lost", "/demo": "In one sentence", "/chat": "Lost", "/dashboard": "Dashboard", "/agents": "Agent",
   "/product": "Product", "/pricing": "Pricing", "/marketing": "Marketing", "/research": "Research",
   "/docs": "Prompt library", "/impact": "Impact", "/roadmap": "roadmap", "/chat/results": "Staff", "/core": "extract",
 };
