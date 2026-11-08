@@ -79,8 +79,9 @@ function TestingSummary({ tests, missing }) {
         <h3 className="font-display text-lg font-bold">Time to report an item</h3>
         {impact ? (
           <p className="mt-2 text-ink-soft">
-            Median with the chat: <strong>{impact.withChat} min</strong>. Median the same people say it takes today: <strong>{impact.baseline} min</strong>
-            {" "}({impact.savedMinutes} min less, {impact.savedPct}%). Minutes with the chat are measured by the tester; minutes today are self-reported.
+            Median with the chat: <strong>{impact.withChat} min</strong> ({impact.nWithChat} timed). Median today, self-reported: <strong>{impact.baseline} min</strong> ({impact.nBaseline} answered).{" "}
+            {impact.enough ? `That is ${impact.savedMinutes} min less (${impact.savedPct}%).` : "Not enough answers on both sides (at least 3 each) to claim a saving."}{" "}
+            Minutes with the chat are measured by the tester; minutes today are self-reported.
           </p>
         ) : (
           <p className="mt-2 text-muted">{missing ? "The user_tests table has not been created yet." : "No user test with both numbers yet, so no impact is shown."}</p>

@@ -39,12 +39,19 @@ export default function ImpactApp() {
         {!tests ? (
           <p className="mt-3 text-sm text-muted">Loading...</p>
         ) : impact ? (
-          <div className="mt-4 grid gap-4 sm:grid-cols-4">
-            <div className="card p-5 text-center"><div className="font-display text-4xl font-extrabold">{impact.withChat} min</div><div className="mt-1 text-xs uppercase tracking-wider text-muted-2">median with the chat</div></div>
-            <div className="card p-5 text-center"><div className="font-display text-4xl font-extrabold">{impact.baseline} min</div><div className="mt-1 text-xs uppercase tracking-wider text-muted-2">median today (self-reported)</div></div>
-            <div className="card p-5 text-center"><div className="font-display text-4xl font-extrabold">{impact.savedPct}%</div><div className="mt-1 text-xs uppercase tracking-wider text-muted-2">less time</div></div>
-            <div className="card p-5 text-center"><div className="font-display text-4xl font-extrabold">{rule.finishedAlone} of {rule.total}</div><div className="mt-1 text-xs uppercase tracking-wider text-muted-2">finished alone{trust !== null ? `, trust ${trust} of 5` : ""}</div></div>
-          </div>
+          <>
+            <div className="mt-4 grid gap-4 sm:grid-cols-4">
+              <div className="card p-5 text-center"><div className="font-display text-4xl font-extrabold">{impact.withChat} min</div><div className="mt-1 text-xs uppercase tracking-wider text-muted-2">median with the chat ({impact.nWithChat} timed)</div></div>
+              <div className="card p-5 text-center"><div className="font-display text-4xl font-extrabold">{impact.baseline} min</div><div className="mt-1 text-xs uppercase tracking-wider text-muted-2">median today, self-reported ({impact.nBaseline} answered)</div></div>
+              <div className="card p-5 text-center"><div className="font-display text-4xl font-extrabold">{impact.enough ? `${impact.savedPct}%` : "n/a"}</div><div className="mt-1 text-xs uppercase tracking-wider text-muted-2">{impact.enough ? "less time" : "not enough answers to compare"}</div></div>
+              <div className="card p-5 text-center"><div className="font-display text-4xl font-extrabold">{rule.finishedAlone} of {rule.total}</div><div className="mt-1 text-xs uppercase tracking-wider text-muted-2">finished alone{trust !== null ? `, trust ${trust} of 5` : ""}</div></div>
+            </div>
+            {!impact.enough && (
+              <p role="status" className="mt-3 max-w-3xl text-sm text-ink-soft">
+                No time saving is claimed: a comparison needs at least 3 people on each side, and these come from different people. Most testers answered that they do not know how long it takes today, or that they never report lost items, which is a finding in itself.
+              </p>
+            )}
+          </>
         ) : (
           <p className="mt-3 text-sm text-muted">No user test has both numbers yet, so no impact is shown. Nothing is estimated in its place.</p>
         )}
