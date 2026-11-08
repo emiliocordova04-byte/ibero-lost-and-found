@@ -63,7 +63,7 @@ Implementation note: reuse the existing design system (colors, fonts, `card`, `b
 ```
 Browser (Next.js App Router, React 19, Tailwind 4)
   /demo        client page: step state, live counts
-  /dashboard   client page: reads 6 tables, tabs, refresh
+  /dashboard   client page: reads 7 tables (the 6 listed plus research_entries), tabs, refresh
   /agents  /impact  /roadmap   mostly static pages built from lib/ventureData.mjs
   /docs        static: prompt library + build log (lib/ventureData.mjs)
   Nav + footer in app/layout.js (single list in lib/venture.mjs, used by Nav and by the nav test)
