@@ -1,4 +1,7 @@
+import { PROMPT_LIBRARY, BUILD_LOG } from "@/lib/ventureData.mjs";
+
 export default function Docs() {
+  const totalCommits = BUILD_LOG.reduce((n, b) => n + b.commits, 0);
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
       <h1 className="text-4xl font-extrabold sm:text-5xl mb-4">Docs</h1>
@@ -173,6 +176,50 @@ export default function Docs() {
         auto-posting to social networks, no login, no paid analytics.
       </p>
 
+
+      <h2 className="text-2xl font-bold mt-12 mb-3" id="prompt-library">Prompt library</h2>
+      <p className="text-muted mb-4">
+        The prompts that drove the build, reusable as they are. Each one says when to use it.
+        The coding agent is Claude; every output was reviewed and tested by me before it went to main.
+      </p>
+      <div className="space-y-3">
+        {PROMPT_LIBRARY.map((p) => (
+          <details key={p.id} className="card p-4">
+            <summary className="cursor-pointer font-semibold">{p.title} <span className="font-normal text-muted-2">&middot; {p.when}</span></summary>
+            <pre className="mt-3 whitespace-pre-wrap rounded-lg bg-paper-2 p-3 text-sm text-ink-soft">{p.text}</pre>
+          </details>
+        ))}
+      </div>
+
+      <h2 className="text-2xl font-bold mt-12 mb-3" id="build-log">Build log</h2>
+      <p className="text-muted mb-4">
+        {totalCommits} commits to the main branch up to Week 5, each deployed by Vercel. Week 6 commits are listed in the
+        evidence packet and on GitHub.
+      </p>
+      <div className="card overflow-x-auto">
+        <table className="w-full min-w-[560px] text-left text-sm">
+          <thead className="bg-paper-2 text-xs uppercase tracking-wider text-muted-2">
+            <tr><th className="px-3 py-3">Stage</th><th className="px-3 py-3">Dates</th><th className="px-3 py-3">Commits</th><th className="px-3 py-3">Shipped</th></tr>
+          </thead>
+          <tbody>
+            {BUILD_LOG.map((b) => (
+              <tr key={b.id} className="border-t border-line align-top">
+                <td className="px-3 py-3 font-medium"><a className="text-brand hover:underline" href={b.route}>{b.label}</a></td>
+                <td className="px-3 py-3 text-ink-soft">{b.dates}</td>
+                <td className="px-3 py-3">{b.commits}</td>
+                <td className="px-3 py-3 text-ink-soft">{b.shipped}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-muted mt-6">
+        More: <a className="text-brand hover:underline" href="/demo">guided demo</a>,{" "}
+        <a className="text-brand hover:underline" href="/dashboard">dashboard</a>,{" "}
+        <a className="text-brand hover:underline" href="/agents">agent map</a>,{" "}
+        <a className="text-brand hover:underline" href="/impact">impact check</a>,{" "}
+        <a className="text-brand hover:underline" href="/roadmap">Version 2 roadmap</a>.
+      </p>
     </div>
   );
 }
