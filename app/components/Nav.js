@@ -3,17 +3,8 @@
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
+import { NAV_LINKS as LINKS } from "@/lib/venture.mjs";
 
-const LINKS = [
-  { href: "/product", label: "Product" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/marketing", label: "Marketing" },
-  { href: "/chat", label: "Report an item" },
-  { href: "/research", label: "Research" },
-  { href: "/core", label: "Live demo" },
-  { href: "/docs", label: "Docs" },
-  { href: "/chat/results", label: "Staff view" },
-];
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
@@ -26,7 +17,7 @@ export default function Nav() {
           <Logo />
         </a>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
+        <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Main">
           {LINKS.map((l) => {
             const active = pathname === l.href;
             return (
@@ -34,7 +25,7 @@ export default function Nav() {
                 key={l.href}
                 href={l.href}
                 aria-current={active ? "page" : undefined}
-                className={`rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
+                className={`rounded-full px-3 py-2 text-sm font-medium transition-colors ${
                   active
                     ? "bg-ink text-white"
                     : "text-ink-soft hover:bg-paper-2 hover:text-ink"
@@ -44,14 +35,11 @@ export default function Nav() {
               </a>
             );
           })}
-          <a href="/pricing" className="btn-primary btn-sm ml-3">
-            See pricing
-          </a>
         </nav>
 
         <button
           type="button"
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line-strong bg-surface md:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line-strong bg-surface lg:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
@@ -67,7 +55,7 @@ export default function Nav() {
       </div>
 
       {open && (
-        <nav className="border-t border-line bg-paper px-6 pb-5 pt-3 md:hidden" aria-label="Mobile">
+        <nav className="border-t border-line bg-paper px-6 pb-5 pt-3 lg:hidden" aria-label="Mobile">
           <ul className="flex flex-col">
             {LINKS.map((l) => (
               <li key={l.href}>
@@ -83,9 +71,6 @@ export default function Nav() {
               </li>
             ))}
           </ul>
-          <a href="/pricing" onClick={() => setOpen(false)} className="btn-primary mt-4 w-full">
-            See pricing
-          </a>
         </nav>
       )}
     </header>

@@ -4,6 +4,7 @@ import "./globals.css";
 import Nav from "./components/Nav";
 import Logo from "./components/Logo";
 import ChatWidget from "./components/ChatWidget";
+import { FOOTER_LINKS } from "@/lib/venture.mjs";
 
 export const metadata = {
   title: "Ibero Lost & Found | Lost and found for university campuses",
@@ -13,22 +14,27 @@ export const metadata = {
 
 const FOOTER_COLS = [
   {
-    title: "Product",
+    title: "Try it",
     links: [
-      { href: "/product", label: "Product" },
-      { href: "/pricing", label: "Pricing simulator" },
-      { href: "/core", label: "Live item demo" },
+      { href: "/demo", label: "Guided demo" },
       { href: "/chat", label: "Report an item (chat)" },
+      { href: "/dashboard", label: "Dashboard" },
+      { href: "/agents", label: "Agent map" },
     ],
   },
   {
     title: "Company",
     links: [
+      { href: "/product", label: "Product" },
+      { href: "/pricing", label: "Pricing simulator" },
       { href: "/marketing", label: "Marketing engine" },
       { href: "/research", label: "Market research" },
       { href: "/docs", label: "Docs" },
-      { href: "/chat/results", label: "Staff view (chat results)" },
     ],
+  },
+  {
+    title: "More",
+    links: FOOTER_LINKS,
   },
 ];
 
@@ -47,7 +53,7 @@ export default function RootLayout({ children }) {
           {children}
         </main>
         <footer className="border-t border-line bg-paper-2">
-          <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 sm:grid-cols-[1.6fr_1fr_1fr]">
+          <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 sm:grid-cols-[1.4fr_1fr_1fr_1fr]">
             <div>
               <Logo />
               <p className="mt-4 max-w-sm text-sm text-muted">
