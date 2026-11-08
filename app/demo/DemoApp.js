@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { summarizeDashboard, passRule } from "@/lib/venture.mjs";
 import { TIERS } from "@/lib/pricing.mjs";
+import { DEMO_INTRO } from "@/lib/ventureData.mjs";
 
 const STEPS = [
   {
@@ -103,6 +104,9 @@ export default function DemoApp() {
     <div className="mx-auto max-w-6xl px-6 py-14">
       <p className="eyebrow">Week 6 · Guided demo</p>
       <h1 className="mt-2 text-4xl font-extrabold sm:text-5xl">Lost something on campus? Here is the whole venture in six steps</h1>
+      <p className="mt-4 max-w-2xl rounded-xl border border-line-strong bg-surface p-4 text-ink">
+        <strong>In one sentence.</strong> {DEMO_INTRO}
+      </p>
       <p className="mt-3 max-w-2xl text-muted">
         About five minutes. Each step explains what happens, why it matters and shows live proof from the database.
         Use the buttons or the arrow keys.
@@ -121,7 +125,7 @@ export default function DemoApp() {
 
       <div className="mt-6 grid gap-5 lg:grid-cols-[2fr_1fr]">
         <section className="card p-6 sm:p-8" aria-live="polite">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-2">Step {step + 1} of {STEPS.length}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-2">Step {step + 1} of {STEPS.length}{step === 0 ? " · Start here" : ""}</p>
           <h2 className="mt-1 text-3xl font-extrabold">{s.title}</h2>
           <p className="mt-4 text-ink-soft"><strong>What happens.</strong> {s.what}</p>
           <p className="mt-3 text-ink-soft"><strong>Why it matters.</strong> {s.why}</p>
@@ -131,6 +135,11 @@ export default function DemoApp() {
               {live.state === "loading" ? "Loading live numbers..." : live.state === "error" ? "The live numbers are not available right now (the database could not be reached), but the page link below still works." : proof}
             </p>
           </div>
+          {step === STEPS.length - 1 && (
+            <div className="mt-5 rounded-xl bg-paper-2 p-4 text-sm text-ink-soft">
+              <strong>That is the whole venture.</strong> Now try it yourself: report an invented item in the chat, then open the dashboard to see it appear.
+            </div>
+          )}
           <p className="mt-4 inline-block rounded-full bg-paper-2 px-3 py-1 text-xs font-semibold text-ink-soft">{s.label}</p>
           <div className="mt-6 flex flex-wrap gap-3">
             {s.links.map((l) => <a key={l.href} href={l.href} className="btn-primary">{l.label}</a>)}
