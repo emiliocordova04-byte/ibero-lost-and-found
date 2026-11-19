@@ -170,8 +170,10 @@ export default function DashboardApp() {
 
       {summary && !allFailed && (
         <>
-          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-5">
-            <Kpi label="Chat reports" value={summary.reports} />
+          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
+            <Kpi label="Chat reports (all)" value={summary.reports} />
+            <Kpi label="From testers (T1 to T5)" value={summary.testerReports} />
+            <Kpi label="Demo runs (mine)" value={summary.demoReports} />
             <Kpi label="Returned" value={summary.returned} />
             <Kpi label="Open" value={summary.open} />
             <Kpi label="Thumbs up" value={summary.thumbsUpPct === null ? "-" : `${summary.thumbsUpPct}%`} />
