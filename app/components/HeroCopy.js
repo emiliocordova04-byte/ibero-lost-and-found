@@ -63,7 +63,7 @@ export default function HeroCopy() {
           {CTA.variants[state.cta]}
           <span aria-hidden="true">→</span>
         </a>
-        <a href="#demo" className="btn-ghost px-7 py-3.5 text-base">
+        <a href="/demo" className="btn-ghost px-7 py-3.5 text-base">
           {LANDING_COPY.secondaryCta}
         </a>
       </div>

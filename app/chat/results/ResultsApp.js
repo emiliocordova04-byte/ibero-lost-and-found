@@ -68,7 +68,7 @@ export default function ResultsApp() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
-      <p className="eyebrow">Week 5 · Staff and test summary</p>
+      <p className="eyebrow">Staff view and test summary</p>
       <h1 className="mt-2 text-3xl font-extrabold sm:text-4xl">Chat results</h1>
       <p className="mt-3 max-w-2xl text-muted">
         Every confirmed report from <a className="underline hover:text-brand" href="/chat">/chat</a>, with its rating.
@@ -88,7 +88,7 @@ export default function ResultsApp() {
         {updatedAt && <span className="text-xs text-muted-2">Updated {updatedAt.toLocaleTimeString()}</span>}
         <label className="flex cursor-pointer items-center gap-2 text-sm">
           <input type="checkbox" checked={onlyTests} onChange={(e) => setOnlyTests(e.target.checked)} />
-          Only external user tests (tags T1, T2, T3)
+          Only external user tests (tags T1 to T5)
         </label>
       </div>
 
