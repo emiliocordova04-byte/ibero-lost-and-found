@@ -2,11 +2,11 @@
 
 Written and committed BEFORE any Week 5 code (Gate 1 of the course build gates).
 
-## Decisions made by Emilio (inputs to everything below)
+## Decisions I made (inputs to everything below)
 
 - Audience: the **student** who lost or found an object (a public-facing assistant, not an admin tool).
 - Language: the chat understands **English and Spanish**; the documentation and demo are in English.
-- Testing: he has **3 external people ready** to use `/chat` for the required user tests.
+- Testing: I have **3 external people ready** to use `/chat` for the required user tests.
 - Free tools only, no paid AI API. Anything rule-based is labelled as such on the page.
 
 ## Problem

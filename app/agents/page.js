@@ -49,7 +49,7 @@ export default function AgentsPage() {
           <Plain>Visitor</Plain><Arrow /><Node a={by("marketing")} /><Arrow /><Plain>marketing_assets<br />ab_events</Plain><Arrow /><Node a={by("pricing")} /><Arrow /><Plain>University buyer<br />(human decision)</Plain>
         </div>
         <div className="flex flex-col gap-3 lg:flex-row">
-          <Plain>Emilio (human)</Plain><Arrow /><Node a={by("coding")} /><Arrow /><Plain>GitHub<br />Vercel</Plain><Arrow /><Plain>Every page above</Plain>
+          <Plain>Me, the founder (human)</Plain><Arrow /><Node a={by("coding")} /><Arrow /><Plain>GitHub<br />Vercel</Plain><Arrow /><Plain>Every page above</Plain>
         </div>
       </div>
 

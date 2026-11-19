@@ -2,12 +2,12 @@
 
 Written and committed BEFORE any Week 4 code (Gate 1 of the course build gates).
 
-## Decisions made by Emilio (inputs to everything below)
+## Decisions I made (inputs to everything below)
 
 - Target persona: the **university administrator** (the person who decides to buy).
 - Brand tone: **professional and trustworthy**.
 - Language of site and campaign: **English**.
-- Visual direction, in his words: bold, eye-catching, professional, interactive and easy to use. The previous dark theme was judged "too AI and ugly" by a professor.
+- Visual direction, in my words: bold, eye-catching, professional, interactive and easy to use. The previous dark theme was judged "too AI and ugly" by a professor.
 
 ## Problem
 

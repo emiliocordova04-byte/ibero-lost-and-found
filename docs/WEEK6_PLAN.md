@@ -2,11 +2,11 @@
 
 Written and committed BEFORE any Week 6 code (Gate 1 of the course build gates). Required live page: `/demo`.
 
-## Decisions made by Emilio (inputs to everything below)
+## Decisions I made (inputs to everything below)
 
 - Deadline: this week, so the full scope below is in, with time for 5 external users and a 5-minute video.
 - External users: 5 in total. The 3 testers from Week 5 (T1, T2, T3) count, and 2 new people are already lined up (T4, T5).
-- Demo video: 5 minutes, narrated by Emilio with his own voice notes, over a real recording of the live site.
+- Demo video: 5 minutes, narrated by me with my own voice notes, over a real recording of the live site.
 - Extra (no deliverable): a 3 to 5 minute final pitch for class on November 24, prepared after the packet.
 - Free tools only, no paid AI API. Anything rule-based or simulated is labelled on the page.
 
