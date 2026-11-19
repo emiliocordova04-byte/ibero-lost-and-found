@@ -93,10 +93,10 @@ export default function Core() {
         real AI model.
       </p>
 
-      <label htmlFor="description" className="block text-sm font-medium mb-2">
+      <label htmlFor="core-f1" htmlFor="description" className="block text-sm font-medium mb-2">
         Free-text description
       </label>
-      <textarea
+      <textarea id="core-f1"
         id="description"
         value={text}
         onChange={(e) => setText(e.target.value)}

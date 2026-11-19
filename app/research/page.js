@@ -124,8 +124,8 @@ export default function Research() {
         <h2 className="font-semibold mb-4">Add a competitor / substitute</h2>
         <form onSubmit={handleAdd} className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm text-muted-2 mb-1">Name</label>
-            <input
+            <label htmlFor="research-f1" className="block text-sm text-muted-2 mb-1">Name</label>
+            <input id="research-f1"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               className={INPUT_CLASS}
@@ -134,8 +134,8 @@ export default function Research() {
             />
           </div>
           <div>
-            <label className="block text-sm text-muted-2 mb-1">Source URL</label>
-            <input
+            <label htmlFor="research-f2" className="block text-sm text-muted-2 mb-1">Source URL</label>
+            <input id="research-f2"
               value={form.source_url}
               onChange={(e) => setForm({ ...form, source_url: e.target.value })}
               className={INPUT_CLASS}
@@ -143,8 +143,8 @@ export default function Research() {
             />
           </div>
           <div>
-            <label className="block text-sm text-muted-2 mb-1">Region</label>
-            <select
+            <label htmlFor="research-f3" className="block text-sm text-muted-2 mb-1">Region</label>
+            <select id="research-f3"
               value={form.region}
               onChange={(e) => setForm({ ...form, region: e.target.value })}
               className={INPUT_CLASS}
@@ -157,8 +157,8 @@ export default function Research() {
             </select>
           </div>
           <div>
-            <label className="block text-sm text-muted-2 mb-1">Type</label>
-            <select
+            <label htmlFor="research-f4" className="block text-sm text-muted-2 mb-1">Type</label>
+            <select id="research-f4"
               value={form.type}
               onChange={(e) => setForm({ ...form, type: e.target.value })}
               className={INPUT_CLASS}
@@ -171,10 +171,10 @@ export default function Research() {
             </select>
           </div>
           <div>
-            <label className="block text-sm text-muted-2 mb-1">
+            <label htmlFor="research-f5" className="block text-sm text-muted-2 mb-1">
               Digital score (0 manual – 10 fully digital)
             </label>
-            <input
+            <input id="research-f5"
               type="number"
               min="0"
               max="10"
@@ -184,10 +184,10 @@ export default function Research() {
             />
           </div>
           <div>
-            <label className="block text-sm text-muted-2 mb-1">
+            <label htmlFor="research-f6" className="block text-sm text-muted-2 mb-1">
               Campus-specific score (0 generic – 10 campus-only)
             </label>
-            <input
+            <input id="research-f6"
               type="number"
               min="0"
               max="10"
@@ -197,8 +197,8 @@ export default function Research() {
             />
           </div>
           <div className="sm:col-span-2">
-            <label className="block text-sm text-muted-2 mb-1">Notes</label>
-            <textarea
+            <label htmlFor="research-f7" className="block text-sm text-muted-2 mb-1">Notes</label>
+            <textarea id="research-f7"
               value={form.notes}
               onChange={(e) => setForm({ ...form, notes: e.target.value })}
               rows={2}
@@ -222,12 +222,14 @@ export default function Research() {
       {/* Filter / search */}
       <div className="flex flex-wrap gap-3 mb-6">
         <input
+          aria-label="Search name or notes"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search name or notes…"
           className={`${INPUT_CLASS} flex-1 min-w-[200px]`}
         />
         <select
+          aria-label="Filter by region"
           value={regionFilter}
           onChange={(e) => setRegionFilter(e.target.value)}
           className={INPUT_CLASS}
@@ -239,6 +241,7 @@ export default function Research() {
           ))}
         </select>
         <select
+          aria-label="Filter by type"
           value={typeFilter}
           onChange={(e) => setTypeFilter(e.target.value)}
           className={INPUT_CLASS}

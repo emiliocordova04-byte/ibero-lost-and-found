@@ -192,10 +192,10 @@ export default function Pricing() {
           <h2 className="text-lg font-semibold mb-4">Revenue calculator</h2>
 
           <form onSubmit={handleSave}>
-            <label className="block text-sm font-medium mb-1">
+            <label htmlFor="pricing-f1" className="block text-sm font-medium mb-1">
               University name
             </label>
-            <input
+            <input id="pricing-f1"
               type="text"
               placeholder="e.g. UNAM, Tec de Monterrey…"
               value={scenarioName}
@@ -203,10 +203,10 @@ export default function Pricing() {
               className={`${INPUT_CLASS} mb-4 text-sm`}
             />
 
-            <label className="block text-sm font-medium mb-1">
+            <label htmlFor="pricing-f2" className="block text-sm font-medium mb-1">
               Students per campus
             </label>
-            <input
+            <input id="pricing-f2"
               type="number"
               min="1"
               value={studentsPerCampus}
@@ -221,10 +221,10 @@ export default function Pricing() {
               (based on students per campus above)
             </p>
 
-            <label className="block text-sm font-medium mb-1">
+            <label htmlFor="pricing-f3" className="block text-sm font-medium mb-1">
               Number of campuses in the deal
             </label>
-            <input
+            <input id="pricing-f3"
               type="number"
               min="1"
               value={campuses}
@@ -232,10 +232,10 @@ export default function Pricing() {
               className={`${INPUT_CLASS} mb-4`}
             />
 
-            <label className="block text-sm font-medium mb-1">
+            <label htmlFor="pricing-f4" className="block text-sm font-medium mb-1">
               Ownership
             </label>
-            <select
+            <select id="pricing-f4"
               value={ownership}
               onChange={(e) => setOwnership(e.target.value)}
               className={`${INPUT_CLASS} mb-4`}

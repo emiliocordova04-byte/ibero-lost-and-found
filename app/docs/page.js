@@ -1,5 +1,10 @@
 import { PROMPT_LIBRARY, BUILD_LOG } from "@/lib/ventureData.mjs";
 
+export const metadata = {
+  title: "Docs | Ibero Lost & Found",
+  description: "Setup notes, prompt library and build log for Ibero Lost & Found.",
+};
+
 export default function Docs() {
   const totalCommits = BUILD_LOG.reduce((n, b) => n + b.commits, 0);
   return (
