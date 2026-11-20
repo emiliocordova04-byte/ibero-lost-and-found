@@ -63,7 +63,7 @@ export default function MarketingApp() {
       <AssetsProvider>
         <header className="bg-navy text-white">
           <div className="mx-auto max-w-6xl px-6 py-14 sm:py-20">
-            <p className="eyebrow !text-sun">Week 4 · Marketing engine</p>
+            <p className="eyebrow !text-sun">Marketing engine</p>
             <h1 className="mt-3 max-w-3xl text-4xl font-extrabold leading-[1.05] sm:text-6xl">
               The marketing engine behind the homepage
             </h1>

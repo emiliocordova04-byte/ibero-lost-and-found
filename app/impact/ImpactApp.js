@@ -29,7 +29,7 @@ export default function ImpactApp() {
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-14">
-      <p className="eyebrow">Week 6 · Impact and viability</p>
+      <p className="eyebrow">Impact and viability</p>
       <h1 className="mt-2 text-4xl font-extrabold sm:text-5xl">Does it help, is it safe, can it pay for itself?</h1>
       <p className="mt-3 max-w-2xl text-muted">Three honest checks. Numbers about people come from the testers; everything about money is an assumption and says so.</p>
 

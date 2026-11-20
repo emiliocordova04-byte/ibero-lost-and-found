@@ -34,7 +34,7 @@ const by = (id) => AGENTS.find((a) => a.id === id);
 export default function AgentsPage() {
   return (
     <div className="mx-auto max-w-6xl px-6 py-14">
-      <p className="eyebrow">Week 6 · Agent map</p>
+      <p className="eyebrow">Agent map</p>
       <h1 className="mt-2 text-4xl font-extrabold sm:text-5xl">Who does what, and where a person decides</h1>
       <p className="mt-3 max-w-2xl text-muted">
         The venture is a small team of agents. None of them is a paid AI model: they are rules, templates and simulators, and each one

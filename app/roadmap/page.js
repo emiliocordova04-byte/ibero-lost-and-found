@@ -11,7 +11,7 @@ export default function RoadmapPage() {
   const EFFORT = { 1: "Small", 2: "Medium", 3: "Large" };
   return (
     <div className="mx-auto max-w-6xl px-6 py-14">
-      <p className="eyebrow">Week 6 · Version 2</p>
+      <p className="eyebrow">Version 2</p>
       <h1 className="mt-2 text-4xl font-extrabold sm:text-5xl">Version 2 roadmap</h1>
       <p className="mt-3 max-w-2xl text-muted">
         Each item solves a real gap found while building and testing. Score is impact (1 to 5) divided by effort (1 to 3), so the

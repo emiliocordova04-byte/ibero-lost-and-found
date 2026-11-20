@@ -157,7 +157,7 @@ export default function ChatApp({ compact = false }) {
     <div className={compact ? "flex h-full flex-col" : "mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12"}>
       {!compact && (
         <>
-          <p className="eyebrow">Week 5 · Guided assistant</p>
+          <p className="eyebrow">Guided assistant</p>
           <h1 className="mt-2 text-3xl font-extrabold sm:text-4xl">Report a lost or found item</h1>
           <p className="mt-3 max-w-2xl text-muted">
             Three short questions, then a summary you confirm. A staff member reviews every report. Works in English and

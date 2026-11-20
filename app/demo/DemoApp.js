@@ -102,7 +102,7 @@ export default function DemoApp() {
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-14">
-      <p className="eyebrow">Week 6 · Guided demo</p>
+      <p className="eyebrow">Guided demo</p>
       <h1 className="mt-2 text-4xl font-extrabold sm:text-5xl">Lost something on campus? Here is the whole venture in six steps</h1>
       <p className="mt-4 max-w-2xl rounded-xl border border-line-strong bg-surface p-4 text-ink">
         <strong>In one sentence.</strong> {DEMO_INTRO}

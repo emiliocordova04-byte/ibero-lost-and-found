@@ -148,7 +148,7 @@ export default function DashboardApp() {
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-14">
-      <p className="eyebrow">Week 6 · Records</p>
+      <p className="eyebrow">Records</p>
       <h1 className="mt-2 text-4xl font-extrabold sm:text-5xl">Dashboard</h1>
       <p className="mt-3 max-w-2xl text-muted">
         Live records from every module of the venture. Transcripts, comments and contact data are never loaded on this page.
